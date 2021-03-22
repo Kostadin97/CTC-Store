@@ -5,33 +5,24 @@ const path = require("path");
 const cors = require("cors");
 const passport = require("passport");
 
-// Initialize the app
 const app = express();
 
-// Middlewares
-
-// Form Data Middleware
 app.use(
   bodyParser.urlencoded({
     extended: false,
   })
 );
 
-// Json Body Middleware
 app.use(bodyParser.json());
 
-// Cors Middleware
 app.use(cors());
 
-// Setting up the static directory
 app.use(express.static(path.join(__dirname, "public")));
 
-// Use the passport Middleware
 app.use(passport.initialize());
-// Bring in the Passport Strategy
+
 require("./config/passport")(passport);
 
-// Bring in the Database Config and connect with the database
 const db = require("./config/keys").mongoURI;
 mongoose
   .connect(db, {
@@ -41,12 +32,11 @@ mongoose
   .then(() => console.log(`Database connected successfully ${db}`))
   .catch((err) => console.log(`Unable to connect with the database ${err}`));
 
-// Bring in the Users route
-// const users = require("./routes/api/users");
-// app.use("/api/users", users);
+const users = require("./routes/api/users");
+app.use("/api/users", users);
 
-// const posts = require("./routes/api/posts");
-// app.use("/api/posts", posts);
+const products = require("./routes/api/products");
+app.use("/api/products", products);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
