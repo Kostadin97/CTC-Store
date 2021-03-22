@@ -10,12 +10,20 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/my-products", (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, "yoursecret");
+  const userId = decoded._id;
+  Product.find({ creator: userId }).then((products) => {
+    res.status(200).json(products);
+  });
+});
+
 router.post("/create", (req, res) => {
   const { title, description, imageUrl, price, category } = req.body;
   const token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, "yoursecret");
   const userId = decoded._id;
-  
 
   if (
     title === "" ||
@@ -35,16 +43,13 @@ router.post("/create", (req, res) => {
     imageUrl,
     price,
     category,
+    creator: userId,
   });
 
-  User.findById(userId).then((data) => {
-    data.myProducts.push(newProduct);
-    data.save().then(() => {
-      console.log(data.myProducts);
-      return res.status(201).json({
-        success: true,
-        msg: "Product Created Successfully.",
-      });
+  newProduct.save().then(() => {
+    return res.status(201).json({
+      success: true,
+      msg: "Post Created Successfully.",
     });
   });
 });
