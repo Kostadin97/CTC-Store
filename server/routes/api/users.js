@@ -55,4 +55,40 @@ router.post("/register", (req, res) => {
   });
 });
 
+router.post("/login", (req, res) => {
+  User.findOne({ username: req.body.username }).then((user) => {
+    if (!user) {
+      return res.status(404).json({
+        msg: "Username is not found.",
+        success: false,
+      });
+    }
+
+    bcrypt.compare(req.body.password, user.password).then((isMatch) => {
+      if (isMatch) {
+        const payload = {
+          _id: user._id,
+          username: user.username,
+          name: user.name,
+          email: user.email,
+        };
+
+        jwt.sign(payload, key, { exporesIn: 604800 }, (err, token) => {
+          res.status(200).json({
+            success: true,
+            user: user,
+            token: `Bearer ${token}`,
+            msg: "You are now logged in.",
+          });
+        });
+      } else {
+        return res.status(404).json({
+          msg: "Incorrect password.",
+          success: false,
+        });
+      }
+    });
+  });
+});
+
 module.exports = router;
