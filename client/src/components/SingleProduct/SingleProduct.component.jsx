@@ -1,16 +1,7 @@
 import React from "react";
-// import { Link } from "react-router-dom";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import CardMedia from "@material-ui/core/CardMedia";
-import Card from "@material-ui/core/Card";
-
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
 
 import "./SingleProduct.styles.css";
-import useStyles from "../ProductsPreview/styles";
 
 const SingleProduct = ({
   _id,
@@ -20,31 +11,25 @@ const SingleProduct = ({
   price,
   category,
 }) => {
-  const classes = useStyles();
   return (
-    <Grid item key={_id} xs={12} sm={6} md={4} style={classes}>
-      <Card className={classes.card}>
-        <CardMedia
-          className={classes.cardMedia}
-          image={imageUrl}
-          title="Image title"
-        />
-        <CardContent className={classes.cardContent}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {title}
-          </Typography>
-          <Typography>{description}</Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small" color="primary">
+    <div className="col-sm" key={_id}>
+      <div className="card">
+        <img src={imageUrl} className="card-img-top" alt="..." />
+        <div className="card-body">
+          <h5 className="card-title">{title}</h5>
+          <p className="card-text">{description}</p>
+        </div>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">Price: {price}$</li>
+          <li className="list-group-item">Category: {category}</li>
+        </ul>
+        <div className="card-body">
+          <a href="#" className="card-link">
             View
-          </Button>
-          <Button size="small" color="primary">
-            Edit
-          </Button>
-        </CardActions>
-      </Card>
-    </Grid>
+          </a>
+        </div>
+      </div>
+    </div>
   );
 };
 export default SingleProduct;

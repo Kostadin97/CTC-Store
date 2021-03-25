@@ -5,3 +5,9 @@ export const getAll = () => {
     .then((res) => res.json())
     .catch((error) => console.log(error));
 };
+
+export const create = (data) => {
+  return fetch(`${url}/create`, data)
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
+};
