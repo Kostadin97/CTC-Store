@@ -1,0 +1,13 @@
+form {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 60px;
+}
+
+.form-title {
+    margin-top: 30px;
+}
+
+.btn {
+    float: left;
+}

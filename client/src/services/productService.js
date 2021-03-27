@@ -6,8 +6,20 @@ export const getAll = () => {
     .catch((error) => console.log(error));
 };
 
-export const create = (data) => {
-  return fetch(`${url}/create`, data)
-    .then((res) => res.json())
-    .catch((error) => console.log(error));
+export const create = (title, description, imageUrl, price, category) => {
+  const newProduct = {
+    title,
+    description,
+    imageUrl,
+    price,
+    category,
+  };
+
+  return fetch(`${url}/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newProduct),
+  });
 };

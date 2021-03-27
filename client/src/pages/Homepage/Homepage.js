@@ -1,8 +1,7 @@
 import React from "react";
 
-import ProductsPreview from "../../components/ProductsPreview/ProductsPreview.component";
+import ProductsPreview from "../../components/ProductsPreview/ProductsPreview";
 
-import "./Homepage.styles.scss";
 
 const Homepage = () => (
   <div>

@@ -21,9 +21,9 @@ router.get("/my-products", (req, res) => {
 
 router.post("/create", (req, res) => {
   const { title, description, imageUrl, price, category } = req.body;
-  const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, "yoursecret");
-  const userId = decoded._id;
+  // const token = req.headers.authorization.split(" ")[1];
+  // const decoded = jwt.verify(token, "yoursecret");
+  // const userId = decoded._id;
 
   if (
     title === "" ||
@@ -43,7 +43,7 @@ router.post("/create", (req, res) => {
     imageUrl,
     price,
     category,
-    creator: userId,
+    // creator: userId,
   });
 
   newProduct.save().then(() => {

@@ -2,7 +2,7 @@ import React from "react";
 import { Component } from "react";
 
 import * as productService from "../../services/productService";
-import SingleProduct from "../SingleProduct/SingleProduct.component";
+import SingleProduct from "../SingleProduct/SingleProduct";
 
 class ProductsPreview extends Component {
   constructor(props) {

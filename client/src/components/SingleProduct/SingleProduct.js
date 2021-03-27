@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./SingleProduct.styles.css";
+import "./SingleProduct.css";
 
 const SingleProduct = ({
   _id,
@@ -12,7 +12,7 @@ const SingleProduct = ({
   category,
 }) => {
   return (
-    <div className="col-sm" key={_id}>
+    <div className="col-md-4 card-div" key={_id}>
       <div className="card">
         <img src={imageUrl} className="card-img-top" alt="..." />
         <div className="card-body">
@@ -24,9 +24,9 @@ const SingleProduct = ({
           <li className="list-group-item">Category: {category}</li>
         </ul>
         <div className="card-body">
-          <a href="#" className="card-link">
+          <Link to="/details/:id" className="card-link">
             View
-          </a>
+          </Link>
         </div>
       </div>
     </div>
