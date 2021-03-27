@@ -1,12 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import "./Header.css";
+
 const Header = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a className="navbar-brand" href="#">
-        Navbar
-      </a>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <Link to="/" className="navbar-brand ctc" href="#">
+        CTC
+      </Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -18,27 +19,46 @@ const Header = () => {
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-              <Link className="nav-link" to="/" >Home</Link>
+            <Link className="nav-link" to="/">
+              <img
+                src="https://www.flaticon.com/svg/vstatic/svg/263/263115.svg?token=exp=1616881778~hmac=75d3ac23d17d4e143d55be689f8de629"
+                width="30px"
+                alt="Home"
+              />
+            </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/create">
-              Create
+              <img
+                src="https://www.flaticon.com/svg/vstatic/svg/748/748113.svg?token=exp=1616882258~hmac=53a054465428359d8b0e4e59b7e83e56"
+                width="30px"
+                alt="Create"
+              />
             </Link>
           </li>
         </ul>
       </div>
       <ul className="nav justify-content-center">
         <li className="nav-item">
-        <Link className="nav-link" to="/login" >Login</Link>
+          <Link className="nav-link" to="/login">
+            <img
+              src="https://www.flaticon.com/svg/vstatic/svg/747/747376.svg?token=exp=1616883858~hmac=a248d2d49cbf8b6d53c386ffc263e5c8"
+              width="30px"
+              alt="Profile"
+            />
+          </Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">
-            Register
-          </a>
+          <Link className="nav-link" to="/logout">
+            <img
+              src="https://www.flaticon.com/svg/vstatic/svg/992/992680.svg?token=exp=1616884012~hmac=f1c1b152306c3c016a52a7d72b927e47"
+              width="30px"
+              alt="Profile"
+            />
+          </Link>
         </li>
       </ul>
     </nav>
