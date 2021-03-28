@@ -1,45 +1,53 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import { login } from "../../services/authService";
+import { Link } from "react-router-dom";
 
-export const Login = () => {
-  const history = useHistory();
+import * as authService from "../../services/authService";
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      let user = {
-        email: event.target.email.value,
-        password: event.target.password.value,
-      };
-      await login(user).then((res) => {
-        if (res.data.success) {
-          history.push("/");
-        }
-      });
-    } catch (error) {
-      alert("Error logging in please try again");
-    }
+import "./Login.css";
+
+const Login = ({ history }) => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    let user = {
+      username: e.target.username.value,
+      password: e.target.password.value,
+    };
+    authService
+      .login(user)
+      .then(() => {
+        history.push("/");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <>
-      <h3>Login</h3>
+    <div className="container">
+      <h1 className="form-title">Sign In</h1>
       <form onSubmit={onSubmit}>
-        <div>
-          <label>
-            Email
-            <input name="email" type="email" placeholder="Email" />
-          </label>
+        <div className="form-group">
+          <input
+            name="username"
+            type="text"
+            className="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Username"
+          />
         </div>
-        <div>
-          <label>
-            Password
-            <input name="password" type="password" placeholder="Password" />
-          </label>
+        <div className="form-group">
+          <input
+            name="password"
+            type="password"
+            className="form-control"
+            id="exampleInputPassword1"
+            placeholder="Password"
+          />
         </div>
-        <button type="submit">Log in</button>
+        <input type="submit" className="btn btn-primary" value="Sign In" />
+        <Link to="/register">Don't have an account? Sign up here!</Link>
       </form>
-    </>
+    </div>
   );
 };
+export default Login;

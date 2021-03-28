@@ -4,11 +4,13 @@ import Header from "./components/Header/Header";
 import Homepage from "./pages/Homepage/Homepage";
 import Create from "./components/Create/Create";
 
-import { Login } from "./components/Login/Login";
+import Login from "./components/Login/Login";
+import { Register } from "./components/Register/Register";
 
 import "./App.css";
 
 function App() {
+
   return (
     <div className="App">
       <Header />
@@ -17,8 +19,8 @@ function App() {
         <Route path="/" exact component={Homepage} />
         <Route path="/create" component={Create} />
         <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
       </Switch>
-
     </div>
   );
 }

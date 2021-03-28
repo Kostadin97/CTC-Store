@@ -59,13 +59,15 @@ router.post("/login", (req, res) => {
   User.findOne({ username: req.body.username }).then((user) => {
     if (!user) {
       return res.status(404).json({
-        msg: "Username is not found.",
+        msg: "Username is not found",
         success: false,
       });
     }
 
+    // If there is user we are now going to compare the password
     bcrypt.compare(req.body.password, user.password).then((isMatch) => {
       if (isMatch) {
+        // User's password is correct and we need to send the JSON Token for that user
         const payload = {
           _id: user._id,
           username: user.username,
@@ -73,7 +75,7 @@ router.post("/login", (req, res) => {
           email: user.email,
         };
 
-        jwt.sign(payload, key, { exporesIn: 604800 }, (err, token) => {
+        jwt.sign(payload, key, { expiresIn: 604800 }, (err, token) => {
           res.status(200).json({
             success: true,
             user: user,
@@ -83,7 +85,7 @@ router.post("/login", (req, res) => {
         });
       } else {
         return res.status(404).json({
-          msg: "Incorrect password.",
+          msg: "Incorrect password",
           success: false,
         });
       }

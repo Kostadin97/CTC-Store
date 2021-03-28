@@ -1,6 +1,6 @@
 import * as productService from "../../services/productService";
 
-import "./create.css";
+import "./Create.css";
 
 const Create = ({ history }) => {
   const onCreateproductSubmitHandler = (e) => {

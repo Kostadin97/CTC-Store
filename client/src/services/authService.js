@@ -1,14 +1,21 @@
-// export const login = (user) => {
-//     return fetch("http://localhost:500/api/users/login", user)
+import axios from "axios";
 
-//     const token = res.data.token;
+export const login = async (user) => {
+  try {
+    let res = await axios.post("http://localhost:5000/api/users/login", user);
 
-//     localStorage.setItem("token", token);
+    const token = res.data.token;
 
-//     axios.defaults.headers.common["Authorization"] = token;
+    localStorage.setItem("token", token);
 
-//     return res;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    axios.defaults.headers.common["Authorization"] = token;
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const register = (user) => {
+  return axios.post("http://localhost:5000/api/users/register", user);
+};

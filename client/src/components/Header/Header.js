@@ -56,7 +56,7 @@ const Header = () => {
             <img
               src="https://www.flaticon.com/svg/vstatic/svg/992/992680.svg?token=exp=1616884012~hmac=f1c1b152306c3c016a52a7d72b927e47"
               width="30px"
-              alt="Profile"
+              alt="Logout"
             />
           </Link>
         </li>
