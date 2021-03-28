@@ -10,6 +10,13 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/:id", (req, res) => {
+  const id = req.params.id;
+  Product.findById(id).then((product) => {
+    return res.status(200).json(product);
+  });
+});
+
 router.get("/my-products", (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, "yoursecret");

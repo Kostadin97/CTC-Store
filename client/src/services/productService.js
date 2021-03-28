@@ -6,6 +6,12 @@ export const getAll = () => {
     .catch((error) => console.log(error));
 };
 
+export const getOne = (id) => {
+  return fetch(`${url}/${id}`)
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
+};
+
 export const create = (title, description, imageUrl, price, category) => {
   const newProduct = {
     title,

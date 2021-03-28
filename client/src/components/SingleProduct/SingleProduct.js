@@ -24,7 +24,10 @@ const SingleProduct = ({
           <li className="list-group-item">Category: {category}</li>
         </ul>
         <div className="card-body">
-          <Link to="/details/:id" className="card-link">
+          <Link
+            to={`/details/` + _id}
+            className="card-link"
+          >
             View
           </Link>
         </div>
