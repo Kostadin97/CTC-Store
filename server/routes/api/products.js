@@ -28,7 +28,8 @@ router.get("/my-products", (req, res) => {
 
 router.post("/create", (req, res) => {
   const { title, description, imageUrl, price, category } = req.body;
-  // const token = req.headers.authorization.split(" ")[1];
+  console.log(req);
+  // const token = localStorage.getItem("token");
   // const decoded = jwt.verify(token, "yoursecret");
   // const userId = decoded._id;
 

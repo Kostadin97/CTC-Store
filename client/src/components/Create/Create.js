@@ -9,7 +9,6 @@ const Create = ({ history }) => {
     // const { title, description, imageUrl, price, category } = e.target;
 
     const title = e.target.title.value;
-    // console.log(title);
     const description = e.target.description.value;
     const imageUrl = e.target.imageUrl.value;
     const price = e.target.price.value;
