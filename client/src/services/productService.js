@@ -13,6 +13,7 @@ export const getOne = (id) => {
 };
 
 export const create = (title, description, imageUrl, price, category) => {
+  const token = localStorage.getItem("token");
   const newProduct = {
     title,
     description,
@@ -25,6 +26,7 @@ export const create = (title, description, imageUrl, price, category) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: token,
     },
     body: JSON.stringify(newProduct),
   });

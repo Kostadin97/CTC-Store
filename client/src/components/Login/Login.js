@@ -1,24 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import * as authService from "../../services/authService";
 
 import "./Login.css";
 
 const Login = ({ history }) => {
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     let user = {
       username: e.target.username.value,
       password: e.target.password.value,
     };
-    authService
-      .login(user)
-      .then(() => {
+
+    try {
+      let res = await authService.login(user);
+      if (res.data.success) {
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        axios.defaults.headers["Authorization"] = token;
+        console.log(axios.defaults.headers["Authorization"]);
         history.push("/");
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

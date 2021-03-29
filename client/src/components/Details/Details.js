@@ -24,7 +24,6 @@ class Details extends Component {
     let date = this.state.product.date
       ? this.state.product.date.slice(0, 9)
       : "";
-    console.log(this.state.product);
     return (
       <div className="container">
         <h1 className="single-title">{this.state.product.title}</h1>

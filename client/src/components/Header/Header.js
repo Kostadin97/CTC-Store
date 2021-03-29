@@ -39,6 +39,15 @@ const Header = () => {
               />
             </Link>
           </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/favourites">
+              <img
+                src="https://www.flaticon.com/svg/vstatic/svg/833/833300.svg?token=exp=1617051826~hmac=739af9c45a0cb65d211b7f8b0bf5fcc2"
+                width="30px"
+                alt="Favourites"
+              />
+            </Link>
+          </li>
         </ul>
       </div>
       <ul className="nav justify-content-center">
