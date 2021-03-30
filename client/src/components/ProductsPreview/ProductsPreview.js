@@ -1,33 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Component } from "react";
 
 import * as productService from "../../services/productService";
 import SingleProduct from "../SingleProduct/SingleProduct";
 
-class ProductsPreview extends Component {
-  constructor(props) {
-    super(props);
+const ProductsPreview = (props) => {
+  const [products, setProducts] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
+  useEffect(() => {
+    productService.getAll().then((products) => setProducts(products));
+  }, []);
 
-    this.state = {
-      products: [],
-    };
-  }
 
-  componentDidMount() {
-    productService.getAll().then((res) => this.setState({ products: res }));
-  }
-
-  render() {
-    return (
-      <div className="container">
-        <div className="row">
-          {this.state.products.map((card) => (
-            <SingleProduct key={card._id} {...card} />
-          ))}
-        </div>
+  return (
+    <div className="container">
+      <div className="row">
+        {products.map((card) => (
+          <SingleProduct isLoggedIn={isLoggedIn} key={card._id} {...card} />
+        ))}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ProductsPreview;

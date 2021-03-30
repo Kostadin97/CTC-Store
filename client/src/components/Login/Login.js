@@ -1,12 +1,17 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
+import { useHistory } from "react-router-dom";
 
 import * as authService from "../../services/authService";
 
 import "./Login.css";
 
-const Login = ({ history }) => {
+const Login = (props) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
+  const history = useHistory();
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -15,20 +20,20 @@ const Login = ({ history }) => {
       password: e.target.password.value,
     };
 
-    try {
-      let res = await authService.login(user);
-      if (res.data.success) {
-        const token = res.data.token;
-        localStorage.setItem("token", token);
-        axios.defaults.headers["Authorization"] = token;
-        console.log(axios.defaults.headers["Authorization"]);
+    authService
+      .login(user)
+      .then((res) => {
+        if (res.data.success) {
+          const token = res.data.token;
+          localStorage.setItem("token", token);
+          axios.defaults.headers["Authorization"] = token;
+          setIsLoggedIn(!isLoggedIn);
+        }
+      })
+      .then(() => {
         history.push("/");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+      });
   };
-
   return (
     <div className="container">
       <h1 className="form-title">Sign In</h1>

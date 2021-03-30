@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./Header.css";
 
-const Header = () => {
+const Header = (props) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link to="/" className="navbar-brand ctc" href="#">
@@ -61,13 +64,17 @@ const Header = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/logout">
-            <img
-              src="https://www.flaticon.com/svg/vstatic/svg/992/992680.svg?token=exp=1616884012~hmac=f1c1b152306c3c016a52a7d72b927e47"
-              width="30px"
-              alt="Logout"
-            />
-          </Link>
+          {isLoggedIn === true ? (
+            <Link className="nav-link" to="/logout">
+              <img
+                src="https://www.flaticon.com/svg/vstatic/svg/992/992680.svg?token=exp=1616884012~hmac=f1c1b152306c3c016a52a7d72b927e47"
+                width="30px"
+                alt="Logout"
+              />
+            </Link>
+          ) : (
+            ""
+          )}
         </li>
       </ul>
     </nav>
