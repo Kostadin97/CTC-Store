@@ -2,7 +2,12 @@ import { Link } from "react-router-dom";
 
 import * as authService from "../../services/authService";
 
-export const Register = ({ history }) => {
+import Header from "../../components/Header/Header";
+
+const Register = ({ history }) => {
+  const user = localStorage.getItem("token");
+  const isLoggedIn = user ? true : false;
+
   const registerHandler = (e) => {
     e.preventDefault();
 
@@ -23,57 +28,62 @@ export const Register = ({ history }) => {
   };
 
   return (
-    <div className="container">
-      <h1 className="form-title">Sign Up</h1>
-      <form onSubmit={registerHandler}>
-        <div className="form-group">
-          <input
-            name="name"
-            type="text"
-            className="form-control"
-            aria-describedby="emailHelp"
-            placeholder="Name"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            name="email"
-            type="email"
-            className="form-control"
-            aria-describedby="emailHelp"
-            placeholder="Email"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            name="username"
-            type="text"
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Username"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            name="password"
-            type="password"
-            className="form-control"
-            id="exampleInputPassword1"
-            placeholder="Password"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            name="confirmPassword"
-            type="password"
-            className="form-control"
-            placeholder="Confirm Password"
-          />
-        </div>
-        <input type="submit" className="btn btn-primary" value="Sign Up" />
-        <Link to="/login">Already have an account? Sign in here!</Link>
-      </form>
-    </div>
+    <>
+      <Header isLoggedIn={isLoggedIn} />
+      <div className="container">
+        <h1 className="form-title">Sign Up</h1>
+        <form onSubmit={registerHandler}>
+          <div className="form-group">
+            <input
+              name="name"
+              type="text"
+              className="form-control"
+              aria-describedby="emailHelp"
+              placeholder="Name"
+            />
+          </div>
+          <div className="form-group">
+            <input
+              name="email"
+              type="email"
+              className="form-control"
+              aria-describedby="emailHelp"
+              placeholder="Email"
+            />
+          </div>
+          <div className="form-group">
+            <input
+              name="username"
+              type="text"
+              className="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Username"
+            />
+          </div>
+          <div className="form-group">
+            <input
+              name="password"
+              type="password"
+              className="form-control"
+              id="exampleInputPassword1"
+              placeholder="Password"
+            />
+          </div>
+          <div className="form-group">
+            <input
+              name="confirmPassword"
+              type="password"
+              className="form-control"
+              placeholder="Confirm Password"
+            />
+          </div>
+          <input type="submit" className="btn btn-primary" value="Sign Up" />
+          <Link to="/login">Already have an account? Sign in here!</Link>
+        </form>
+      </div>
+    </>
   );
 };
+
+export default Register;

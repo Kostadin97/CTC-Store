@@ -61,4 +61,32 @@ router.post("/create", (req, res) => {
   });
 });
 
+router.put("/edit/:id", (req, res) => {
+  const { title, description, imageUrl, price, category } = req.body;
+  const id = req.params.id;
+
+  if (title === "" || description === "" || imageUrl === "") {
+    return res.status(400).json({
+      msg: "Please fill all the inputs.",
+    });
+  }
+  Product.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    .then((data) => {
+      if (!data) {
+        return res.status(404).json({
+          msg: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`,
+        });
+      } else
+        return res.json({
+          success: true,
+          msg: "Post was updated successfully.",
+        });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        msg: `Error updating post with id: ${id}`,
+      });
+    });
+});
+
 module.exports = router;

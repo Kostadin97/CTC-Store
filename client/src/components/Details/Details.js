@@ -1,37 +1,33 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 import * as productService from "../../services/productService";
 
+import Header from "../../components/Header/Header";
+
 import "./Details.css";
 
-class Details extends Component {
-  constructor(props) {
-    super(props);
+const Details = (props) => {
+  const user = localStorage.getItem("token");
+  const isLoggedIn = user ? true : false;
 
-    this.state = {
-      product: [],
-    };
-  }
+  const [product, setProduct] = useState([]);
+  const productId = props.match.params.id;
 
-  componentDidMount() {
-    const productId = this.props.match.params.id;
-    productService
-      .getOne(productId)
-      .then((res) => this.setState({ product: res }));
-  }
+  useEffect(() => {
+    productService.getOne(productId).then((product) => setProduct(product));
+  }, []);
 
-  render() {
-    let date = this.state.product.date
-      ? this.state.product.date.slice(0, 9)
-      : "";
-    return (
+  return (
+    <>
+      <Header isLoggedIn={isLoggedIn} />
       <div className="container">
-        <h1 className="single-title">{this.state.product.title}</h1>
+        <h1 className="single-title">{product.title}</h1>
         <div className="row single-content">
           <div className="col-md-5">
             <div className="project-info-box mt-0">
               <h5>DESCRIPTION</h5>
-              <p className="mb-0">{this.state.product.description}</p>
+              <p className="mb-0">{product.description}</p>
             </div>
 
             <div className="project-info-box">
@@ -39,29 +35,34 @@ class Details extends Component {
                 <b>Creator:</b> Kocko
               </p>
               <p>
-                <b>Date:</b> {date}
+                <b>Date:</b> {product.date ? product.date.slice(0, 9) : ""}
               </p>
               <p>
-                <b>Category:</b> {this.state.product.category}
+                <b>Category:</b> {product.category}
               </p>
               <p className="mb-0">
-                <b>Price:</b> ${this.state.product.price}
+                <b>Price:</b> ${product.price}
               </p>
             </div>
           </div>
 
           <div className="col-md-7">
             <img
-              src={this.state.product.imageUrl}
+              src={product.imageUrl}
               alt="imgUrl"
               className="rounded"
               width="400px"
             />
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-6">
+            <Link to={`/edit/` + product._id}>Edit</Link>
+          </div>
+        </div>
       </div>
-    );
-  }
-}
+    </>
+  );
+};
 
 export default Details;

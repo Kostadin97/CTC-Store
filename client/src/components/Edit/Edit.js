@@ -1,38 +1,50 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import * as productService from "../../services/productService";
 
 import Header from "../../components/Header/Header";
+import "./Edit.css";
 
-import "./Create.css";
-
-const Create = ({ history }) => {
+const Edit = (props) => {
   const user = localStorage.getItem("token");
   const isLoggedIn = user ? true : false;
 
-  if (isLoggedIn === false) {
-    history.push("/login");
-  }
+  const [product, setProduct] = useState({});
+  const productId = props.match.params.id;
 
-  const onCreateproductSubmitHandler = (e) => {
+  useEffect(() => {
+    productService.getOne(productId).then((result) => setProduct(result));
+  }, []);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const title = e.target.title.value;
-    const description = e.target.description.value;
-    const imageUrl = e.target.imageUrl.value;
-    const price = e.target.price.value;
-    const category = e.target.category.value;
+    const edittedProduct = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+      imageUrl: e.target.imageUrl.value,
+      price: e.target.price.value,
+      category: e.target.category.value,
+    };
 
-    productService
-      .create(title, description, imageUrl, price, category)
-      .then(() => {
-        history.push("/");
-      });
+    productService.edit(productId, edittedProduct).then(() => {
+      props.history.push("/");
+    });
   };
+
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    setProduct({ ...product, [name]: value });
+    console.log(product);
+  };
+
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
       <div className="container">
-        <h1 className="form-title">Add product</h1>
-        <form onSubmit={onCreateproductSubmitHandler}>
+        <h1 className="form-title">Edit product</h1>
+        <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group col-md-12">
               <input
@@ -40,7 +52,9 @@ const Create = ({ history }) => {
                 type="text"
                 className="form-control"
                 id="text"
-                placeholder="Title"
+                // placeholder="Title"
+                value={product.title || ""}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -51,6 +65,8 @@ const Create = ({ history }) => {
               id="exampleFormControlTextarea1"
               rows="3"
               placeholder="Description"
+              value={product.description || ""}
+              onChange={handleChange}
             ></textarea>
           </div>
           <div className="form-group">
@@ -60,6 +76,8 @@ const Create = ({ history }) => {
               className="form-control"
               id="inputAddress2"
               placeholder="Image URL"
+              value={product.imageUrl || ""}
+              onChange={handleChange}
             />
           </div>
           <div className="form-row">
@@ -70,10 +88,18 @@ const Create = ({ history }) => {
                 className="form-control"
                 id="inputCity"
                 placeholder="Price"
+                value={product.price || ""}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group col-md-6">
-              <select id="inputState" className="form-control" name="category">
+              <select
+                id="inputState"
+                className="form-control"
+                name="category"
+                value={product.category || ""}
+                onChange={handleChange}
+              >
                 <option>Category...</option>
                 <option value="shoes">Shoes</option>
                 <option value="hats">Hats</option>
@@ -91,4 +117,4 @@ const Create = ({ history }) => {
     </>
   );
 };
-export default Create;
+export default Edit;

@@ -31,3 +31,21 @@ export const create = (title, description, imageUrl, price, category) => {
     body: JSON.stringify(newProduct),
   });
 };
+
+export const edit = (id, data) => {
+  const edittedProduct = {
+    title: data.title,
+    description: data.description,
+    imageUrl: data.imageUrl,
+    price: data.price,
+    category: data.category,
+  };
+
+  return fetch(`${url}/edit/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(edittedProduct),
+  });
+};
