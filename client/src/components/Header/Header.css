@@ -12,6 +12,20 @@ li {
   font-size: 30px;
   margin-left: 10px;
 }
+
 #logout-btn {
-  cursor: pointer;
+  position: relative;
+  left: 250px;
+  border: none;
+  background: none;
+}
+
+#login-btn {
+  position: relative;
+  left: 520px;
+}
+
+#register-btn {
+  position: relative;
+  left: 550px;
 }

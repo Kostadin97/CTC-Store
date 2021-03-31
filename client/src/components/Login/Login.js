@@ -8,9 +8,11 @@ import Header from "../../components/Header/Header";
 
 import "./Login.css";
 
-const Login = ({ history }) => {
-  const user = localStorage.getItem("token");
-  const isLoggedIn = user ? true : false;
+const Login = (props) => {
+  // const user = localStorage.getItem("token");
+  // const isLoggedIn = user ? true : false;
+  const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
+  console.log(isLoggedIn);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +27,8 @@ const Login = ({ history }) => {
         const token = res.data.token;
         localStorage.setItem("token", token);
         axios.defaults.headers["Authorization"] = token;
-        history.push("/");
+        setIsLoggedIn(true);
+        props.history.push("/");
       }
     });
   };

@@ -7,6 +7,7 @@ import axios from "axios";
 import "./Header.css";
 
 const Header = (props) => {
+  console.log(props);
   const history = useHistory();
   const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
 
@@ -59,7 +60,7 @@ const Header = (props) => {
           )}
 
           {isLoggedIn ? (
-            <li className="nav-item active">
+            <li id="logout-btn" className="nav-item active">
               <button
                 id="logout-btn"
                 onClick={logoutHandler}
@@ -71,12 +72,12 @@ const Header = (props) => {
           ) : (
             <>
               <li>
-                <Link to="/login" className="nav-link">
+                <Link id="login-btn" to="/login" className="nav-link">
                   Login
                 </Link>
               </li>
               <li>
-                <Link to="/register" className="nav-link">
+                <Link id="register-btn" to="/register" className="nav-link">
                   Register
                 </Link>
               </li>
