@@ -9,12 +9,10 @@ import Header from "../../components/Header/Header";
 import "./Login.css";
 
 const Login = (props) => {
-  // const user = localStorage.getItem("token");
-  // const isLoggedIn = user ? true : false;
   const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
-  console.log(isLoggedIn);
+  let errorMessage = "";
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     let user = {
@@ -22,20 +20,33 @@ const Login = (props) => {
       password: e.target.password.value,
     };
 
-    authService.login(user).then((res) => {
-      if (res.data.success) {
-        const token = res.data.token;
-        localStorage.setItem("token", token);
-        axios.defaults.headers["Authorization"] = token;
-        setIsLoggedIn(true);
-        props.history.push("/");
-      }
-    });
-  };
+    authService
+      .login(user)
+      .then((res) => {
+        if (res.data.success) {
+          const token = res.data.token;
+          localStorage.setItem("token", token);
+          axios.defaults.headers["Authorization"] = token;
+          setIsLoggedIn(true);
+          props.history.push("/");
+        }
+      })
+      .catch((err) => {
+        let errorNotification = document.getElementById("error-div");
+        errorMessage = err.response.data.msg;
+        errorNotification.style.display = "block";
+        errorNotification.style.background = "#f8d7da";
+        errorNotification.style.border = "red";
+        errorNotification.textContent = errorMessage;
+      });
+    };
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
       <div className="container">
+        <div id="error-div" class="alert alert-danger">
+          {errorMessage || ""}
+        </div>
         <h1 className="form-title">Sign In</h1>
         <form onSubmit={onSubmit}>
           <div className="form-group">

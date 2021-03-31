@@ -14,10 +14,10 @@ const SingleProduct = ({
   return (
     <div className="col-md-4 card-div" key={_id}>
       <div className="card">
-        <img src={imageUrl} className="card-img-top" alt="..." />
+        <img id="products-preview-img" src={imageUrl} className="card-img-top" alt="..." />
         <div className="card-body">
           <h5 className="card-title">{title}</h5>
-          <p className="card-text">{description}</p>
+          <p className="card-text">{description.slice(0, 100) + "..." || ""}</p>
         </div>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">Price: {price}$</li>
