@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import * as productService from "../../services/productService";
 
@@ -24,12 +24,7 @@ const Details = (props) => {
       <div className="container">
         <h1 className="single-title">{product.title}</h1>
         <div className="row single-content">
-          <div className="col-md-5">
-            <div className="project-info-box mt-0">
-              <h5>DESCRIPTION</h5>
-              <p className="mb-0">{product.description}</p>
-            </div>
-
+          <div className="col-md-5 info-div">
             <div className="project-info-box">
               <p>
                 <b>Creator:</b> Kocko
@@ -43,10 +38,13 @@ const Details = (props) => {
               <p className="mb-0">
                 <b>Price:</b> ${product.price}
               </p>
+              <p className="mb-0">
+                <b>Likes:</b> {product.likes ? product.likes.length : 0}
+              </p>
             </div>
           </div>
 
-          <div className="col-md-7">
+          <div className="col-md-7 img-div">
             <img
               src={product.imageUrl}
               alt="imgUrl"
@@ -55,10 +53,27 @@ const Details = (props) => {
             />
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-6">
-            <Link to={`/edit/` + product._id}>Edit</Link>
+        <div className="row buttons-div">
+          <div className="col-md-2">
+            <Link className="btn btn-dark" to={`/edit/` + product._id}>
+              Edit
+            </Link>
           </div>
+
+          <div className="col-md-2">
+            <button className="danger-btn btn btn-danger">Delete</button>
+          </div>
+        </div>
+        <div className="row single-content">
+          <div className="col-md-12">
+            <div className="project-info-box mt-0">
+              <h5>DESCRIPTION</h5>
+              <p className="mb-0">{product.description}</p>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6"></div>
         </div>
       </div>
     </>

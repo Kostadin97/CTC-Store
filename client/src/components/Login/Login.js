@@ -44,7 +44,7 @@ const Login = (props) => {
     <>
       <Header isLoggedIn={isLoggedIn} />
       <div className="container">
-        <div id="error-div" class="alert alert-danger">
+        <div id="error-div" className="alert alert-danger">
           {errorMessage || ""}
         </div>
         <h1 className="form-title">Sign In</h1>

@@ -6,6 +6,7 @@ import Create from "./components/Create/Create";
 import Edit from "./components/Edit/Edit";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import Footer from "./components/Footer/Footer";
 
 import "./App.css";
 
@@ -25,6 +26,7 @@ function App() {
         />
         <Route path="/register" component={Register} />
       </Switch>
+      <Footer />
     </div>
   );
 }
