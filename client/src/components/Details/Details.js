@@ -18,6 +18,17 @@ const Details = (props) => {
     productService.getOne(productId).then((product) => setProduct(product));
   }, []);
 
+  const deleteProductHandler = () => {
+    productService
+      .deleteProduct(productId)
+      .then(() => {
+        props.history.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
@@ -37,9 +48,6 @@ const Details = (props) => {
               </p>
               <p className="mb-0">
                 <b>Price:</b> ${product.price}
-              </p>
-              <p className="mb-0">
-                <b>Likes:</b> {product.likes ? product.likes.length : 0}
               </p>
             </div>
           </div>
@@ -61,7 +69,12 @@ const Details = (props) => {
           </div>
 
           <div className="col-md-2">
-            <button className="danger-btn btn btn-danger">Delete</button>
+            <button
+              className="danger-btn btn btn-danger"
+              onClick={deleteProductHandler}
+            >
+              Delete
+            </button>
           </div>
         </div>
         <div className="row single-content">

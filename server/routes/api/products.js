@@ -5,9 +5,11 @@ const jwt = require("jsonwebtoken");
 const User = require("../../model/User");
 
 router.get("/", (req, res) => {
-  Product.find({}).then((products) => {
-    res.status(200).json(products);
-  });
+  Product.find({})
+    .then((products) => {
+      res.status(200).json(products);
+    })
+    .catch((err) => console.log(err));
 });
 
 router.get("/:id", (req, res) => {
@@ -85,6 +87,20 @@ router.put("/edit/:id", (req, res) => {
     .catch((err) => {
       return res.status(500).json({
         msg: `Error updating post with id: ${id}`,
+      });
+    });
+});
+
+router.delete("/delete/:id", (req, res) => {
+  const id = req.params.id;
+
+  Product.findByIdAndRemove(id)
+    .then(() => {
+      return res.status(200).json({ msg: "Product was deleted successfully." });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        msg: `Error deleting product with id: ${id}`,
       });
     });
 });

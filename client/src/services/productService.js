@@ -49,3 +49,9 @@ export const edit = (id, data) => {
     body: JSON.stringify(edittedProduct),
   });
 };
+
+export const deleteProduct = (id) => {
+  return fetch(`${url}/delete/${id}`, {
+    method: "DELETE",
+  });
+};

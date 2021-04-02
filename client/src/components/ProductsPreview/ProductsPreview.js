@@ -12,7 +12,10 @@ const ProductsPreview = (props) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    productService.getAll().then((products) => setProducts(products));
+    productService
+      .getAll()
+      .then((products) => setProducts(products))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -22,9 +25,11 @@ const ProductsPreview = (props) => {
         <>
           <div className="container">
             <div className="row">
-              {products.map((card) => (
-                <SingleProduct key={card._id} {...card} />
-              ))}
+              {products
+                ? products.map((card) => (
+                    <SingleProduct key={card._id} {...card} />
+                  ))
+                : ""}
             </div>
           </div>
         </>

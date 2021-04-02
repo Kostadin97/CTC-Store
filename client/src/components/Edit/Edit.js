@@ -29,7 +29,7 @@ const Edit = (props) => {
     };
 
     productService.edit(productId, edittedProduct).then(() => {
-      props.history.push("/");
+      props.history.push(`/details/${productId}`);
     });
   };
 
@@ -110,7 +110,7 @@ const Edit = (props) => {
           <input
             type="submit"
             className="btn btn-primary"
-            value="Add Product"
+            value="Edit Product"
           />
         </form>
       </div>
