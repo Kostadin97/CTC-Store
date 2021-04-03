@@ -16,7 +16,19 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route exact={true} path="/" component={ProductsPreview} />
+        <Route
+          path="/"
+          exact
+          render={(props) => (
+            <ProductsPreview {...props} isLoggedIn={isLoggedIn} />
+          )}
+        />
+        <Route
+          path="/categories/:category"
+          render={(props) => (
+            <ProductsPreview {...props} isLoggedIn={isLoggedIn} />
+          )}
+        />
         <Route path="/details/:id" component={Details} />
         <Route path="/create" component={Create} />
         <Route path="/edit/:id" component={Edit} />

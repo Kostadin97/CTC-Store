@@ -7,7 +7,6 @@ import axios from "axios";
 import "./Header.css";
 
 const Header = (props) => {
-  console.log(props);
   const history = useHistory();
   const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
 
@@ -19,7 +18,7 @@ const Header = (props) => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
       <Link to="/" className="navbar-brand">
         CTC
       </Link>

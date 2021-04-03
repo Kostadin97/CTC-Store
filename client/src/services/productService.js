@@ -1,7 +1,12 @@
+import axios from "axios";
 const url = "http://localhost:5000/api/products";
+// const url = "http://localhost:5001/pets";
 
-export const getAll = () => {
-  return fetch(url)
+
+export const getAll = (category = "") => {
+  let productsUrl =
+    url + (category && category !== "all" ? `?category=${category}` : "");
+  return fetch(productsUrl)
     .then((res) => res.json())
     .catch((error) => console.log(error));
 };
@@ -12,23 +17,34 @@ export const getOne = (id) => {
     .catch((error) => console.log(error));
 };
 
-export const create = (title, description, imageUrl, price, category) => {
-  const token = localStorage.getItem("token");
-  const newProduct = {
-    title,
-    description,
-    imageUrl,
-    price,
-    category,
-  };
+// export const create = (newProduct) => {
+// const token = localStorage.getItem("token");
+// const newProduct = {
+//   title,
+//   description,
+//   imageUrl,
+//   price,
+//   category,
+// };
 
-  return fetch(`${url}/create`, {
-    method: "POST",
+// return fetch(`${url}/create`, {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//     Authorization: token,
+//   },
+//   body: JSON.stringify(newProduct),
+// });
+// };
+
+export const create = (productData) => {
+  const token = localStorage.getItem("token");
+  return axios.post("http://localhost:5000/api/products/create", {
     headers: {
       "Content-Type": "application/json",
       Authorization: token,
     },
-    body: JSON.stringify(newProduct),
+    body: JSON.stringify(productData),
   });
 };
 

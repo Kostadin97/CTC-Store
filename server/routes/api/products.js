@@ -41,8 +41,9 @@ router.post("/create", (req, res) => {
     price === "" ||
     category === ""
   ) {
-    return res.status(400).json({
+    return res.status(404).json({
       msg: "Please fill all the inputs.",
+      success: false,
     });
   }
 
@@ -67,8 +68,8 @@ router.put("/edit/:id", (req, res) => {
   const { title, description, imageUrl, price, category } = req.body;
   const id = req.params.id;
 
-  if (title === "" || description === "" || imageUrl === "") {
-    return res.status(400).json({
+  if (title === "" || description === "" || imageUrl === "" || price === "" || category === "") {
+    return res.status(404).json({
       msg: "Please fill all the inputs.",
     });
   }

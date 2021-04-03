@@ -3,34 +3,66 @@ import * as productService from "../../services/productService";
 import Header from "../../components/Header/Header";
 
 import "./Create.css";
+import axios from "axios";
 
 const Create = ({ history }) => {
   const user = localStorage.getItem("token");
   const isLoggedIn = user ? true : false;
+  let errorMessage = "";
 
   if (isLoggedIn === false) {
     history.push("/login");
   }
 
-  const onCreateproductSubmitHandler = (e) => {
+  const onCreateproductSubmitHandler = async (e) => {
     e.preventDefault();
 
-    const title = e.target.title.value;
-    const description = e.target.description.value;
-    const imageUrl = e.target.imageUrl.value;
-    const price = e.target.price.value;
-    const category = e.target.category.value;
+    const newProduct = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+      imageUrl: e.target.imageUrl.value,
+      price: e.target.price.value,
+      category: e.target.category.value,
+    };
 
-    productService
-      .create(title, description, imageUrl, price, category)
-      .then(() => {
-        history.push("/");
+    const options = {
+      url: "http://localhost:5000/api/products/create",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: user,
+      },
+      data: newProduct,
+    };
+
+    await axios(options)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        history.push("/create");
+        let errorNotification = document.getElementById("error-create");
+        errorMessage = err.response.data.msg;
+        errorNotification.style.display = "block";
+        errorNotification.style.background = "#f8d7da";
+        errorNotification.style.border = "red";
+        errorNotification.textContent = errorMessage;
+        setTimeout(() => {
+          errorNotification.style.display = "block";
+          errorNotification.style.background = "whitesmoke";
+          errorNotification.style.border = "none";
+          errorNotification.textContent = "";
+        }, 4000);
       });
   };
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
+
       <div className="container">
+        <div id="error-create" className="alert alert-danger">
+          {errorMessage || ""}
+        </div>
         <h1 className="form-title">Add product</h1>
         <form onSubmit={onCreateproductSubmitHandler}>
           <div className="form-row">
@@ -74,7 +106,7 @@ const Create = ({ history }) => {
             </div>
             <div className="form-group col-md-6">
               <select id="inputState" className="form-control" name="category">
-                <option>Category...</option>
+                <option value="">Category...</option>
                 <option value="shoes">Shoes</option>
                 <option value="hats">Hats</option>
                 <option value="jackets">Jackets</option>
