@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -9,7 +8,6 @@ import Header from "../../components/Header/Header";
 import "./Login.css";
 
 const Login = (props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
   let errorMessage = "";
 
   const onSubmit = (e) => {
@@ -27,7 +25,6 @@ const Login = (props) => {
           const token = res.data.token;
           localStorage.setItem("token", token);
           axios.defaults.headers["Authorization"] = token;
-          setIsLoggedIn(true);
           props.history.push("/");
         }
       })
@@ -39,10 +36,11 @@ const Login = (props) => {
         errorNotification.style.border = "red";
         errorNotification.textContent = errorMessage;
       });
-    };
+  };
+
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header />
       <div className="container">
         <div id="error-div" className="alert alert-danger">
           {errorMessage || ""}

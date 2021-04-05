@@ -37,7 +37,7 @@ const Create = ({ history }) => {
 
     await axios(options)
       .then((res) => {
-        console.log(res);
+        history.push("/");
       })
       .catch((err) => {
         history.push("/create");
@@ -52,7 +52,7 @@ const Create = ({ history }) => {
           errorNotification.style.background = "whitesmoke";
           errorNotification.style.border = "none";
           errorNotification.textContent = "";
-        }, 4000);
+        }, 5000);
       });
   };
   return (
@@ -107,9 +107,8 @@ const Create = ({ history }) => {
             <div className="form-group col-md-6">
               <select id="inputState" className="form-control" name="category">
                 <option value="">Category...</option>
-                <option value="shoes">Shoes</option>
-                <option value="hats">Hats</option>
-                <option value="jackets">Jackets</option>
+                <option value="Shoe">Shoe</option>
+                <option value="Hat">Hat</option>
               </select>
             </div>
           </div>

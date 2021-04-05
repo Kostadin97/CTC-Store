@@ -2,11 +2,16 @@ import axios from "axios";
 const url = "http://localhost:5000/api/products";
 // const url = "http://localhost:5001/pets";
 
-
 export const getAll = (category = "") => {
   let productsUrl =
     url + (category && category !== "all" ? `?category=${category}` : "");
   return fetch(productsUrl)
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
+};
+
+export const getCreatedByMe = () => {
+  return fetch(`${url}/myproducts`)
     .then((res) => res.json())
     .catch((error) => console.log(error));
 };

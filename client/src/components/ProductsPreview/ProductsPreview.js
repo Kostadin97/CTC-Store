@@ -1,90 +1,93 @@
-import React from "react";
-
-import Header from "../../components/Header/Header";
+import React, { useEffect, useState } from "react";
 
 import * as productService from "../../services/productService";
+import Header from "../../components/Header/Header";
 import SingleProduct from "../SingleProduct/SingleProduct";
 
 import CategoryNavigation from "../CategoryNavigation/CategoryNavigation";
 
-class ProductsPreview extends React.Component {
-  constructor(props) {
-    super(props);
+import "./ProductsPreview.css";
 
-    this.state = {
-      isLoggedIn: this.props.isLoggedIn,
-      products: [],
-      categorizedProducts: [],
-      currentCategory: "all",
-    };
-  }
+const ProductsPreview = (props) => {
+  const user = localStorage.getItem("token");
+  const isLoggedIn = user ? true : false;
+  const [products, setProducts] = useState([]);
+  const [categorizedProducts, setCategorizedProducts] = useState([]);
 
-  componentDidMount() {
+  useEffect(() => {
     productService
       .getAll()
-      .then((res) =>
-        this.setState({ products: res, isLoggedIn: this.props.isLoggedIn })
-      );
-  }
+      .then((res) => {
+        setProducts(res);
+        setCategorizedProducts(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
-  componentDidUpdate(prevProps) {
-    const category = this.props.match.params.category;
+  useEffect(() => {
+    const category = props.match.params.category;
 
-    if (prevProps.match.params.category === category) {
-      return;
-    }
+    // if (props.match.params.category === category) {
+    //   return;
+    // }
     productService.getAll(category).then((res) => {
-      let categorizedProducts = [];
+      let categorizedProductsArray = [];
       res.forEach((result) => {
         if (result.category === category) {
-          categorizedProducts.push(result);
+          categorizedProductsArray.push(result);
         }
         if (category === "all") {
-          categorizedProducts.push(result);
-          console.log(this.props.match);
+          categorizedProductsArray.push(result);
+          console.log(props.match);
         }
-        if (this.props.match.url === "/") {
-          categorizedProducts.push(result);
+        if (props.match.url === "/") {
+          categorizedProductsArray.push(result);
         }
       });
-      this.setState({
-        products: categorizedProducts,
-        currentCategory: category,
-        isLoggedIn: this.props.isLoggedIn,
-      });
+      setCategorizedProducts(categorizedProductsArray);
     });
-  }
+  }, [props.match.url]);
 
-  render() {
-    return (
-      <>
-        <Header isLoggedIn={this.state.isLoggedIn} />
-        <div className="row">
-          <div className="col-md-4">
-            <CategoryNavigation />
-          </div>
-          <div className="col-md-8">
-            {this.state.isLoggedIn ? (
-              <>
-                <div className="container">
-                  <div className="row">
-                    {this.state.products
-                      ? this.state.products.map((card) => (
-                          <SingleProduct key={card._id} {...card} />
-                        ))
-                      : ""}
-                  </div>
+  return (
+    <>
+      <Header isLoggedIn={isLoggedIn} {...props} />
+      <div className="row latest-products-div">
+        <div className="col-md-12">
+          {isLoggedIn ? (
+            <>
+              <h1>Latest Products</h1>
+              <div className="container">
+                <div className="row">
+                  {products
+                    ? products.map((card) => (
+                        <SingleProduct key={card._id} {...card} />
+                      ))
+                    : ""}
                 </div>
-              </>
-            ) : (
-              <>
-                <div>Nothing here</div>
-              </>
-            )}
-          </div>
+              </div>
+
+              <div className="container">
+                <h1>{}</h1>
+                <CategoryNavigation />
+                <div className="row">
+                  {categorizedProducts
+                    ? categorizedProducts.map((card) => (
+                        <SingleProduct key={card._id} {...card} />
+                      ))
+                    : ""}
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div>Nothing here</div>
+            </>
+          )}
         </div>
-      </>
-    );
-  }
-}
+      </div>
+      <br />
+      <br />
+    </>
+  );
+};
 export default ProductsPreview;

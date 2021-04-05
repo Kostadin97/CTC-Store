@@ -4,6 +4,17 @@ const Product = require("../../model/Product");
 const jwt = require("jsonwebtoken");
 const User = require("../../model/User");
 
+router.get("/myproducts", (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, "yoursecret");
+  const userId = decoded._id;
+  Product.find({ creator: userId })
+    .then((products) => {
+      res.status(200).json(products);
+    })
+    .catch((err) => console.log(err));
+});
+
 router.get("/", (req, res) => {
   Product.find({})
     .then((products) => {
@@ -16,15 +27,6 @@ router.get("/:id", (req, res) => {
   const id = req.params.id;
   Product.findById(id).then((product) => {
     return res.status(200).json(product);
-  });
-});
-
-router.get("/my-products", (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, "yoursecret");
-  const userId = decoded._id;
-  Product.find({ creator: userId }).then((products) => {
-    res.status(200).json(products);
   });
 });
 
@@ -68,7 +70,13 @@ router.put("/edit/:id", (req, res) => {
   const { title, description, imageUrl, price, category } = req.body;
   const id = req.params.id;
 
-  if (title === "" || description === "" || imageUrl === "" || price === "" || category === "") {
+  if (
+    title === "" ||
+    description === "" ||
+    imageUrl === "" ||
+    price === "" ||
+    category === ""
+  ) {
     return res.status(404).json({
       msg: "Please fill all the inputs.",
     });

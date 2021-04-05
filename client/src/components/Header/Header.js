@@ -1,8 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 import "./Header.css";
 
@@ -44,8 +42,18 @@ const Header = (props) => {
           {isLoggedIn ? (
             <>
               <li className="nav-item active">
+                <Link to="/shop" className="nav-link">
+                  Shop
+                </Link>
+              </li>
+              <li className="nav-item active">
                 <Link to="/create" className="nav-link">
                   Create
+                </Link>
+              </li>
+              <li className="nav-item active">
+                <Link to="/my-products" className="nav-link">
+                  My Products
                 </Link>
               </li>
               <li className="nav-item active">
@@ -53,21 +61,21 @@ const Header = (props) => {
                   Favourites
                 </Link>
               </li>
+              <li>
+                <Link id="profile" to="/profile" className="nav-link active">
+                  Profile
+                </Link>
+              </li>
+              <li id="logout-btn" className="nav-item active">
+                <button
+                  id="logout-btn"
+                  onClick={logoutHandler}
+                  className="nav-link"
+                >
+                  Logout
+                </button>
+              </li>
             </>
-          ) : (
-            ""
-          )}
-
-          {isLoggedIn ? (
-            <li id="logout-btn" className="nav-item active">
-              <button
-                id="logout-btn"
-                onClick={logoutHandler}
-                className="nav-link"
-              >
-                Logout
-              </button>
-            </li>
           ) : (
             <>
               <li>
