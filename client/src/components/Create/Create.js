@@ -4,14 +4,16 @@ import Header from "../../components/Header/Header";
 
 import "./Create.css";
 import axios from "axios";
+import { useState } from "react";
 
-const Create = ({ history }) => {
+const Create = (props) => {
   const user = localStorage.getItem("token");
-  const isLoggedIn = user ? true : false;
+  // const isLoggedIn = user ? true : false;
+  const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
   let errorMessage = "";
 
   if (isLoggedIn === false) {
-    history.push("/login");
+    props.history.push("/login");
   }
 
   const onCreateproductSubmitHandler = async (e) => {
@@ -37,10 +39,10 @@ const Create = ({ history }) => {
 
     await axios(options)
       .then((res) => {
-        history.push("/");
+        props.history.push("/");
       })
       .catch((err) => {
-        history.push("/create");
+        props.history.push("/create");
         let errorNotification = document.getElementById("error-create");
         errorMessage = err.response.data.msg;
         errorNotification.style.display = "block";

@@ -11,7 +11,14 @@ export const getAll = (category = "") => {
 };
 
 export const getCreatedByMe = () => {
-  return fetch(`${url}/myproducts`)
+  const token = localStorage.getItem("token");
+  return fetch(`${url}/myproducts`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  })
     .then((res) => res.json())
     .catch((error) => console.log(error));
 };
@@ -21,26 +28,6 @@ export const getOne = (id) => {
     .then((res) => res.json())
     .catch((error) => console.log(error));
 };
-
-// export const create = (newProduct) => {
-// const token = localStorage.getItem("token");
-// const newProduct = {
-//   title,
-//   description,
-//   imageUrl,
-//   price,
-//   category,
-// };
-
-// return fetch(`${url}/create`, {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json",
-//     Authorization: token,
-//   },
-//   body: JSON.stringify(newProduct),
-// });
-// };
 
 export const create = (productData) => {
   const token = localStorage.getItem("token");

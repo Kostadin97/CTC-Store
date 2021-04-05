@@ -11,6 +11,7 @@ import "./ProductsPreview.css";
 const ProductsPreview = (props) => {
   const user = localStorage.getItem("token");
   const isLoggedIn = user ? true : false;
+
   const [products, setProducts] = useState([]);
   const [categorizedProducts, setCategorizedProducts] = useState([]);
 
@@ -27,9 +28,6 @@ const ProductsPreview = (props) => {
   useEffect(() => {
     const category = props.match.params.category;
 
-    // if (props.match.params.category === category) {
-    //   return;
-    // }
     productService.getAll(category).then((res) => {
       let categorizedProductsArray = [];
       res.forEach((result) => {

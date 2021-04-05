@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../../model/User");
 
 router.get("/myproducts", (req, res) => {
+  console.log(req.headers);
   const token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, "yoursecret");
   const userId = decoded._id;

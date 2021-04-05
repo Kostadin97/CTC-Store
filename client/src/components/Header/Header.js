@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import "./Header.css";
@@ -41,11 +41,6 @@ const Header = (props) => {
           </li>
           {isLoggedIn ? (
             <>
-              <li className="nav-item active">
-                <Link to="/shop" className="nav-link">
-                  Shop
-                </Link>
-              </li>
               <li className="nav-item active">
                 <Link to="/create" className="nav-link">
                   Create
