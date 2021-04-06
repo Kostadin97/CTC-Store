@@ -4,6 +4,7 @@ import ProductsPreview from "./components/ProductsPreview/ProductsPreview";
 import Details from "./components/Details/Details";
 import Create from "./components/Create/Create";
 import MyProducts from "./components/MyProducts/MyProducts";
+import Favourites from "./components/Favourites/Favourites";
 import Edit from "./components/Edit/Edit";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
@@ -33,6 +34,10 @@ function App() {
         <Route
           path="/my-products"
           render={(props) => <MyProducts {...props} isLoggedIn={isLoggedIn} />}
+        />
+        <Route
+          path="/favourites"
+          render={(props) => <Favourites {...props} isLoggedIn={isLoggedIn} />}
         />
         <Route path="/edit/:id" component={Edit} />
         <Route

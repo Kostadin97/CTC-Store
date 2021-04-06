@@ -29,6 +29,29 @@ export const getOne = (id) => {
     .catch((error) => console.log(error));
 };
 
+export const getFavourites = () => {
+  const token = localStorage.getItem("token");
+  return fetch(`${url}/favourites`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  })
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
+};
+
+export const saveProduct = (id) => {
+  const token = localStorage.getItem("token");
+  return axios.put(`${url}/save/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  });
+};
+
 export const create = (productData) => {
   const token = localStorage.getItem("token");
   return axios.post("http://localhost:5000/api/products/create", {

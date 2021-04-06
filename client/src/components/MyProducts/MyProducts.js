@@ -17,7 +17,6 @@ const MyProducts = (props) => {
     });
   }, []);
 
-  console.log(products);
   return (
     <>
       <Header isLoggedIn={isLoggedIn} {...props} />

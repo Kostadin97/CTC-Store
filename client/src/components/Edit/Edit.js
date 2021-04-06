@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 import * as productService from "../../services/productService";
 
@@ -36,7 +35,6 @@ const Edit = (props) => {
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setProduct({ ...product, [name]: value });
-    console.log(product);
   };
 
   return (
@@ -52,7 +50,6 @@ const Edit = (props) => {
                 type="text"
                 className="form-control"
                 id="text"
-                // placeholder="Title"
                 value={product.title || ""}
                 onChange={handleChange}
               />

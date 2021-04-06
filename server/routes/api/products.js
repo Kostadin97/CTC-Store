@@ -5,13 +5,24 @@ const jwt = require("jsonwebtoken");
 const User = require("../../model/User");
 
 router.get("/myproducts", (req, res) => {
-  console.log(req.headers);
   const token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, "yoursecret");
   const userId = decoded._id;
   Product.find({ creator: userId })
     .then((products) => {
       res.status(200).json(products);
+    })
+    .catch((err) => console.log(err));
+});
+
+router.get("/favourites", (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, "yoursecret");
+  const userId = decoded._id;
+
+  User.findById(userId)
+    .then((user) => {
+      res.status(200).json(user.savedProducts);
     })
     .catch((err) => console.log(err));
 });
@@ -29,6 +40,29 @@ router.get("/:id", (req, res) => {
   Product.findById(id).then((product) => {
     return res.status(200).json(product);
   });
+});
+
+router.put("/save/:id", (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, "yoursecret");
+  const userId = decoded._id;
+
+  const productId = req.params.id;
+  User.findById(userId)
+    .then((user) => {
+      user.savedProducts.push(productId);
+      user.save();
+    })
+    .then(() => {
+      return res
+        .status(200)
+        .json({ success: true, msg: "Product Saved Successfully." });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        msg: `Product with id: ${productId} was NOT saved successfully.`,
+      });
+    });
 });
 
 router.post("/create", (req, res) => {

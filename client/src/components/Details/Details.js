@@ -5,6 +5,8 @@ import * as productService from "../../services/productService";
 
 import Header from "../../components/Header/Header";
 
+import axios from 'axios';
+
 import "./Details.css";
 
 const Details = (props) => {
@@ -27,6 +29,24 @@ const Details = (props) => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const saveProductHandler = () => {
+    const productId = props.match.params.id;
+    const user = localStorage.getItem("token");
+    const options = {
+      url: `http://localhost:5000/api/products/save/${productId}`,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: user,
+      },
+    };
+
+    axios(options).then((res) => {
+      // props.history.push("/");
+      console.log(res);
+    });
   };
 
   return (
@@ -74,6 +94,14 @@ const Details = (props) => {
               onClick={deleteProductHandler}
             >
               Delete
+            </button>
+          </div>
+          <div className="col-md-2">
+            <button
+              className="danger-btn btn btn-danger"
+              onClick={saveProductHandler}
+            >
+              Save
             </button>
           </div>
         </div>
