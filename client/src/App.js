@@ -7,6 +7,7 @@ import MyProducts from "./components/MyProducts/MyProducts";
 import Favourites from "./components/Favourites/Favourites";
 import Edit from "./components/Edit/Edit";
 import Login from "./components/Login/Login";
+import Profile from "./components/Profile/Profile";
 import Register from "./components/Register/Register";
 import Footer from "./components/Footer/Footer";
 
@@ -44,7 +45,10 @@ function App() {
           path="/login"
           render={(props) => <Login {...props} isLoggedIn={isLoggedIn} />}
         />
-        <Route path="/login" component={Login} />
+        <Route
+          path="/profile"
+          render={(props) => <Profile {...props} isLoggedIn={isLoggedIn} />}
+        />
         <Route path="/register" component={Register} />
       </Switch>
       <Footer />

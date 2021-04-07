@@ -15,22 +15,20 @@ li {
 
 #logout-btn {
   position: relative;
-  left: 250px;
   border: none;
   background: none;
 }
 
 #login-btn {
   position: relative;
-  left: 520px;
+
 }
 
 #register-btn {
   position: relative;
-  left: 550px;
 }
 
 #profile {
   position: relative;
-  left: 500px;
+
 }
