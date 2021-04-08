@@ -1,17 +1,15 @@
+import { useState, useContext } from "react";
+import { UserContext } from "../../UserContext";
+
 import * as productService from "../../services/productService";
-
-import Header from "../../components/Header/Header";
-
+import Error from "../../components/Error/Error";
 import "./Create.css";
-import axios from "axios";
-import { useState } from "react";
 
 const Create = (props) => {
-  const user = localStorage.getItem("token");
-  const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
-  let errorMessage = "";
+  const { user, setUser } = useContext(UserContext);
+  const [error, setError] = useState("");
 
-  if (isLoggedIn === false) {
+  if (user === false) {
     props.history.push("/login");
   }
 
@@ -26,101 +24,74 @@ const Create = (props) => {
       category: e.target.category.value,
     };
 
-    const options = {
-      url: "http://localhost:5000/api/products/create",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: user,
-      },
-      data: newProduct,
-    };
-
-    await axios(options)
+    await productService
+      .create(newProduct)
       .then((res) => {
-        props.history.push("/");
+        if (res.data.success) {
+          props.history.push("/");
+        }
       })
       .catch((err) => {
-        props.history.push("/create");
-        let errorNotification = document.getElementById("error-create");
-        errorMessage = err.response.data.msg;
-        errorNotification.style.display = "block";
-        errorNotification.style.background = "#f8d7da";
-        errorNotification.style.border = "red";
-        errorNotification.textContent = errorMessage;
-        setTimeout(() => {
-          errorNotification.style.display = "block";
-          errorNotification.style.background = "whitesmoke";
-          errorNotification.style.border = "none";
-          errorNotification.textContent = "";
-        }, 5000);
+        setError(err.response.data.msg);
       });
   };
-  return (
-    <>
-      <Header isLoggedIn={isLoggedIn} />
 
-      <div className="container">
-        <div id="error-create" className="alert alert-danger">
-          {errorMessage || ""}
-        </div>
-        <h1 className="form-title">Add product</h1>
-        <form onSubmit={onCreateproductSubmitHandler}>
-          <div className="form-row">
-            <div className="form-group col-md-12">
-              <input
-                name="title"
-                type="text"
-                className="form-control"
-                id="text"
-                placeholder="Title"
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <textarea
-              name="description"
-              className="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              placeholder="Description"
-            ></textarea>
-          </div>
-          <div className="form-group">
+  return (
+    <div className="container">
+      <br />
+      <Error error={error} />
+      <h1 className="form-title">Add product</h1>
+      <form onSubmit={onCreateproductSubmitHandler}>
+        <div className="form-row">
+          <div className="form-group col-md-12">
             <input
-              name="imageUrl"
+              name="title"
               type="text"
               className="form-control"
-              id="inputAddress2"
-              placeholder="Image URL"
+              id="text"
+              placeholder="Title"
             />
           </div>
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <input
-                name="price"
-                type="text"
-                className="form-control"
-                id="inputCity"
-                placeholder="Price"
-              />
-            </div>
-            <div className="form-group col-md-6">
-              <select id="inputState" className="form-control" name="category">
-                <option value="">Category...</option>
-                <option value="Shoe">Shoe</option>
-                <option value="Hat">Hat</option>
-              </select>
-            </div>
-          </div>
+        </div>
+        <div className="form-group">
+          <textarea
+            name="description"
+            className="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            placeholder="Description"
+          ></textarea>
+        </div>
+        <div className="form-group">
           <input
-            type="submit"
-            className="btn btn-primary"
-            value="Add Product"
+            name="imageUrl"
+            type="text"
+            className="form-control"
+            id="inputAddress2"
+            placeholder="Image URL"
           />
-        </form>
-      </div>
-    </>
+        </div>
+        <div className="form-row">
+          <div className="form-group col-md-6">
+            <input
+              name="price"
+              type="text"
+              className="form-control"
+              id="inputCity"
+              placeholder="Price"
+            />
+          </div>
+          <div className="form-group col-md-6">
+            <select id="inputState" className="form-control" name="category">
+              <option value="">Category...</option>
+              <option value="Shoe">Shoe</option>
+              <option value="Hat">Hat</option>
+            </select>
+          </div>
+        </div>
+        <input type="submit" className="btn btn-primary" value="Add Product" />
+      </form>
+    </div>
   );
 };
 export default Create;

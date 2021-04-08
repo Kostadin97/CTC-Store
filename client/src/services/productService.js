@@ -52,15 +52,18 @@ export const saveProduct = (id) => {
   });
 };
 
-export const create = (productData) => {
+export const create = (newProduct) => {
   const token = localStorage.getItem("token");
-  return axios.post("http://localhost:5000/api/products/create", {
+  const options = {
+    url: "http://localhost:5000/api/products/create",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: token,
     },
-    body: JSON.stringify(productData),
-  });
+    data: newProduct,
+  };
+  return axios(options);
 };
 
 export const edit = (id, data) => {

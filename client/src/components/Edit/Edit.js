@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 
 import * as productService from "../../services/productService";
-
-import Header from "../../components/Header/Header";
 import "./Edit.css";
 
 const Edit = (props) => {
-  const user = localStorage.getItem("token");
-  const isLoggedIn = user ? true : false;
-
   const [product, setProduct] = useState({});
   const productId = props.match.params.id;
 
@@ -38,80 +33,73 @@ const Edit = (props) => {
   };
 
   return (
-    <>
-      <Header isLoggedIn={isLoggedIn} />
-      <div className="container">
-        <h1 className="form-title">Edit product</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-row">
-            <div className="form-group col-md-12">
-              <input
-                name="title"
-                type="text"
-                className="form-control"
-                id="text"
-                value={product.title || ""}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <textarea
-              name="description"
-              className="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              placeholder="Description"
-              value={product.description || ""}
-              onChange={handleChange}
-            ></textarea>
-          </div>
-          <div className="form-group">
+    <div className="container">
+      <h1 className="form-title">Edit product</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="form-row">
+          <div className="form-group col-md-12">
             <input
-              name="imageUrl"
+              name="title"
               type="text"
               className="form-control"
-              id="inputAddress2"
-              placeholder="Image URL"
-              value={product.imageUrl || ""}
+              id="text"
+              value={product.title || ""}
               onChange={handleChange}
             />
           </div>
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <input
-                name="price"
-                type="text"
-                className="form-control"
-                id="inputCity"
-                placeholder="Price"
-                value={product.price || ""}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group col-md-6">
-              <select
-                id="inputState"
-                className="form-control"
-                name="category"
-                value={product.category || ""}
-                onChange={handleChange}
-              >
-                <option>Category...</option>
-                <option value="shoes">Shoes</option>
-                <option value="hats">Hats</option>
-                <option value="jackets">Jackets</option>
-              </select>
-            </div>
-          </div>
+        </div>
+        <div className="form-group">
+          <textarea
+            name="description"
+            className="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            placeholder="Description"
+            value={product.description || ""}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+        <div className="form-group">
           <input
-            type="submit"
-            className="btn btn-primary"
-            value="Edit Product"
+            name="imageUrl"
+            type="text"
+            className="form-control"
+            id="inputAddress2"
+            placeholder="Image URL"
+            value={product.imageUrl || ""}
+            onChange={handleChange}
           />
-        </form>
-      </div>
-    </>
+        </div>
+        <div className="form-row">
+          <div className="form-group col-md-6">
+            <input
+              name="price"
+              type="text"
+              className="form-control"
+              id="inputCity"
+              placeholder="Price"
+              value={product.price || ""}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group col-md-6">
+            <select
+              id="inputState"
+              className="form-control"
+              name="category"
+              value={product.category || ""}
+              onChange={handleChange}
+            >
+              <option>Category...</option>
+              <option value="shoes">Shoes</option>
+              <option value="hats">Hats</option>
+              <option value="jackets">Jackets</option>
+            </select>
+          </div>
+        </div>
+        <input type="submit" className="btn btn-primary" value="Edit Product" />
+      </form>
+    </div>
   );
 };
 export default Edit;

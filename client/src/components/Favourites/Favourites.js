@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 
-import Header from "../Header/Header";
 import SingleProduct from "../SingleProduct/SingleProduct";
 
 import * as productService from "../../services/productService";
 
 const Favourites = (props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -16,7 +14,6 @@ const Favourites = (props) => {
         productService
           .getOne(productId)
           .then((result) => {
-            // setProducts(result);
             resultArray.push(result);
           })
           .then(() => {
@@ -28,23 +25,20 @@ const Favourites = (props) => {
   }, []);
 
   return (
-    <>
-      <Header isLoggedIn={isLoggedIn} {...props} />
-      <div className="row latest-products-div">
-        <div className="col-md-12">
-          <h1>Favourites</h1>
-          <div className="container">
-            <div className="row">
-              {products
-                ? products.map((card) => (
-                    <SingleProduct key={card._id} {...card} />
-                  ))
-                : ""}
-            </div>
+    <div className="row latest-products-div">
+      <div className="col-md-12">
+        <h1>Favourites</h1>
+        <div className="container">
+          <div className="row">
+            {products
+              ? products.map((card) => (
+                  <SingleProduct key={card._id} {...card} />
+                ))
+              : ""}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

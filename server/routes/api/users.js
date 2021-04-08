@@ -10,6 +10,17 @@ const User = require("../../model/User");
 
 router.post("/register", (req, res) => {
   let { name, username, email, password, confirmPassword } = req.body;
+  if (
+    name === "" ||
+    username === "" ||
+    password === "" ||
+    confirmPassword === ""
+  ) {
+    return res.status(404).json({
+      msg: "Please fill all the inputs.",
+      success: false,
+    });
+  }
 
   if (password !== confirmPassword) {
     return res.status(400).json({
@@ -64,10 +75,8 @@ router.post("/login", (req, res) => {
       });
     }
 
-    // If there is user we are now going to compare the password
     bcrypt.compare(req.body.password, user.password).then((isMatch) => {
       if (isMatch) {
-        // User's password is correct and we need to send the JSON Token for that user
         const payload = {
           _id: user._id,
           username: user.username,

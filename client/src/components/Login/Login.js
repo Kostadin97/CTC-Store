@@ -1,19 +1,18 @@
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 import * as authService from "../../services/authService";
-
-import Header from "../../components/Header/Header";
+import Error from "../Error/Error";
 
 import { UserContext } from "../../UserContext";
-
-import { useContext } from "react";
 
 import "./Login.css";
 
 const Login = (props) => {
-  let errorMessage = "";
   const { user, setUser } = useContext(UserContext);
+  const [error, setError] = useState("");
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -34,48 +33,39 @@ const Login = (props) => {
         }
       })
       .catch((err) => {
-        let errorNotification = document.getElementById("error-div");
-        errorMessage = err.response.data.msg;
-        errorNotification.style.display = "block";
-        errorNotification.style.background = "#f8d7da";
-        errorNotification.style.border = "red";
-        errorNotification.textContent = errorMessage;
+        setError(err.response.data.msg);
       });
   };
 
   return (
-    <>
-      {/* <Header /> */}
-      <div className="container">
-        <div id="error-div" className="alert alert-danger">
-          {errorMessage || ""}
+    <div className="container">
+      <br />
+      <Error error={error} />
+      <h1 className="form-title">Sign In</h1>
+      <form onSubmit={onSubmit}>
+        <div className="form-group">
+          <input
+            name="username"
+            type="text"
+            className="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Username"
+          />
         </div>
-        <h1 className="form-title">Sign In</h1>
-        <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <input
-              name="username"
-              type="text"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Username"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              name="password"
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Password"
-            />
-          </div>
-          <input type="submit" className="btn btn-primary" value="Sign In" />
-          <Link to="/register">Don't have an account? Sign up here!</Link>
-        </form>
-      </div>
-    </>
+        <div className="form-group">
+          <input
+            name="password"
+            type="password"
+            className="form-control"
+            id="exampleInputPassword1"
+            placeholder="Password"
+          />
+        </div>
+        <input type="submit" className="btn btn-primary" value="Sign In" />
+        <Link to="/register">Don't have an account? Sign up here!</Link>
+      </form>
+    </div>
   );
 };
 export default Login;

@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 
+import Header from "./components/Header/Header";
 import ProductsPreview from "./components/ProductsPreview/ProductsPreview";
 import Details from "./components/Details/Details";
 import Create from "./components/Create/Create";
@@ -13,13 +14,10 @@ import Register from "./components/Register/Register";
 import "./App.css";
 import { useEffect, useState, useMemo } from "react";
 import { UserContext } from "./UserContext";
-import Header from "./components/Header/Header";
 
 function App() {
   const isThereAUser = localStorage.getItem("token");
-
   const [user, setUser] = useState(isThereAUser ? true : false);
-
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   return (
