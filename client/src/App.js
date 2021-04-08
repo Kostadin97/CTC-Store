@@ -9,49 +9,36 @@ import Edit from "./components/Edit/Edit";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Register from "./components/Register/Register";
-import Footer from "./components/Footer/Footer";
 
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { UserContext } from "./UserContext";
+import Header from "./components/Header/Header";
 
 function App() {
-  const user = localStorage.getItem("token");
-  const [isLoggedIn, setIsLoggedIn] = useState(user ? true : false);
+  const isThereAUser = localStorage.getItem("token");
 
-  useEffect(() => {
-    setIsLoggedIn(isLoggedIn);
-  }, []);
+  const [user, setUser] = useState(isThereAUser ? true : false);
+
+  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   return (
     <div className="App">
-      <Switch>
-        <Route path="/" exact component={ProductsPreview}></Route>
-        <Route path="/categories/:category" component={ProductsPreview} />
-        <Route path="/details/:id" component={Details} />
-        <Route
-          path="/create"
-          render={(props) => <Create {...props} isLoggedIn={isLoggedIn} />}
-        />
-        <Route
-          path="/my-products"
-          render={(props) => <MyProducts {...props} isLoggedIn={isLoggedIn} />}
-        />
-        <Route
-          path="/favourites"
-          render={(props) => <Favourites {...props} isLoggedIn={isLoggedIn} />}
-        />
-        <Route path="/edit/:id" component={Edit} />
-        <Route
-          path="/login"
-          render={(props) => <Login {...props} isLoggedIn={isLoggedIn} />}
-        />
-        <Route
-          path="/profile"
-          render={(props) => <Profile {...props} isLoggedIn={isLoggedIn} />}
-        />
-        <Route path="/register" component={Register} />
-      </Switch>
-      <Footer />
+      <UserContext.Provider value={value}>
+        <Header />
+        <Switch>
+          <Route path="/" exact component={ProductsPreview}></Route>
+          <Route path="/categories/:category" component={ProductsPreview} />
+          <Route path="/details/:id" component={Details} />
+          <Route path="/create" component={Create} />
+          <Route path="/my-products" component={MyProducts} />
+          <Route path="/favourites" component={Favourites} />
+          <Route path="/edit/:id" component={Edit} />
+          <Route path="/login" component={Login} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/register" component={Register} />
+        </Switch>
+      </UserContext.Provider>
     </div>
   );
 }

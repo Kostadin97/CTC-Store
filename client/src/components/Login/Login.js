@@ -5,11 +5,15 @@ import * as authService from "../../services/authService";
 
 import Header from "../../components/Header/Header";
 
+import { UserContext } from "../../UserContext";
+
+import { useContext } from "react";
+
 import "./Login.css";
 
 const Login = (props) => {
   let errorMessage = "";
-
+  const { user, setUser } = useContext(UserContext);
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -25,6 +29,7 @@ const Login = (props) => {
           const token = res.data.token;
           localStorage.setItem("token", token);
           axios.defaults.headers["Authorization"] = token;
+          setUser(user);
           props.history.push("/");
         }
       })
@@ -40,7 +45,7 @@ const Login = (props) => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="container">
         <div id="error-div" className="alert alert-danger">
           {errorMessage || ""}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Container, Col, Row } from "react-bootstrap";
 
 import * as productService from "../../services/productService";
 import Header from "../../components/Header/Header";
@@ -48,28 +49,28 @@ const ProductsPreview = (props) => {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} {...props} />
       <div className="row latest-products-div">
         <div className="col-md-12">
           {isLoggedIn ? (
             <>
-              <h1>Latest Products</h1>
-              <div className="container">
-                <div className="row">
-                  {products
-                    ? products.map((card) => (
-                        <SingleProduct key={card._id} {...card} />
-                      ))
-                    : ""}
-                </div>
-              </div>
-
               <div className="container">
                 <h1>{}</h1>
                 <CategoryNavigation />
                 <div className="row">
                   {categorizedProducts
                     ? categorizedProducts.map((card) => (
+                        <SingleProduct key={card._id} {...card} />
+                      ))
+                    : ""}
+                </div>
+              </div>
+              <br />
+              <br />
+              <h1>Latest Products</h1>
+              <div className="container">
+                <div className="row">
+                  {products
+                    ? products.map((card) => (
                         <SingleProduct key={card._id} {...card} />
                       ))
                     : ""}

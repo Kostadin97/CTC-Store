@@ -8,7 +8,6 @@ import { useState } from "react";
 
 const Create = (props) => {
   const user = localStorage.getItem("token");
-  // const isLoggedIn = user ? true : false;
   const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
   let errorMessage = "";
 

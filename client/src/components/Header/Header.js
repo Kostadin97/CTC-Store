@@ -1,93 +1,96 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { Nav, Navbar, Button } from "react-bootstrap";
+
+import { UserContext } from "../../UserContext";
 
 import "./Header.css";
 
 const Header = (props) => {
   const history = useHistory();
-  const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
+  const { user, setUser } = useContext(UserContext);
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
     delete axios.defaults.headers.common["Authorization"];
-    setIsLoggedIn(false);
+    setUser(null);
     history.push("/");
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-      <Link to="/" className="navbar-brand">
-        CTC
-      </Link>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar.Brand>
+        <Link className="nav-link" to="/">
+          CTC
+        </Link>
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link as={Link} to="/" className="nav-link">
+            Home
+          </Nav.Link>
 
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <Link to="/" className="nav-link">
-              Home
-            </Link>
-          </li>
-          {isLoggedIn ? (
+          {user ? (
             <>
-              <li className="nav-item active">
-                <Link to="/create" className="nav-link">
-                  Create
-                </Link>
-              </li>
-              <li className="nav-item active">
-                <Link to="/my-products" className="nav-link">
-                  My Products
-                </Link>
-              </li>
-              <li className="nav-item active">
-                <Link to="/favourites" className="nav-link">
-                  Favourites
-                </Link>
-              </li>
-              <li>
-                <Link id="profile" to="/profile" className="nav-link active">
-                  Profile
-                </Link>
-              </li>
-              <li id="logout-btn" className="nav-item active">
-                <button
-                  id="logout-btn"
-                  onClick={logoutHandler}
-                  className="nav-link"
-                >
-                  Logout
-                </button>
-              </li>
+              <Nav.Link as={Link} to="/create" className="nav-link">
+                Create
+              </Nav.Link>
+              <Nav.Link as={Link} to="/my-products" className="nav-link">
+                My Products
+              </Nav.Link>
+              <Nav.Link as={Link} to="/favourites" className="nav-link">
+                Favourites
+              </Nav.Link>
+            </>
+          ) : (
+            ""
+          )}
+        </Nav>
+        <Nav>
+          {user ? (
+            <>
+              <Nav.Link
+                as={Button}
+                id="logout-btn"
+                onClick={logoutHandler}
+                className="nav-link"
+              >
+                Logout
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                id="profile"
+                to="/profile"
+                className="nav-link active"
+              >
+                Profile
+              </Nav.Link>
             </>
           ) : (
             <>
-              <li>
-                <Link id="login-btn" to="/login" className="nav-link">
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link id="register-btn" to="/register" className="nav-link">
-                  Register
-                </Link>
-              </li>
+              <Nav.Link
+                as={Link}
+                id="login-btn"
+                to="/login"
+                className="nav-link"
+              >
+                Login
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                id="register-btn"
+                to="/register"
+                className="nav-link"
+              >
+                Register
+              </Nav.Link>
             </>
           )}
-        </ul>
-      </div>
-    </nav>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 
