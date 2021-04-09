@@ -26,7 +26,9 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={value}>
-        <Header />
+        <Switch>
+          <Header />
+        </Switch>
         <Switch>
           <Route path="/" exact component={ProductsPreview} />
           <Route path="/categories/:category" component={ProductsPreview} />
@@ -39,6 +41,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
         </Switch>
+
         <footer style={{ marginTop: "80px" }}>
           Made by Kostadin Seymenski
         </footer>

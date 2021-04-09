@@ -111,9 +111,9 @@ const Edit = (props) => {
               onChange={handleChange}
             >
               <option value="">Category...</option>
-              <option value="shoes">Shoes</option>
-              <option value="hats">Hats</option>
-              <option value="jackets">Jackets</option>
+              <option value="Clothes">Clothes</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Technologies">Technologies</option>
             </select>
           </div>
         </div>

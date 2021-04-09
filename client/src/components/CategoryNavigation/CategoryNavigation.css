@@ -7,5 +7,9 @@
 }
 
 .category-link:hover {
-    color: red;
-  }
+  color: red;
+}
+
+.category-active {
+  color: red;
+}

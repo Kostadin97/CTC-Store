@@ -1,5 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { withRouter } from "react-router";
 import { Nav, Navbar, Button, Row, Col } from "react-bootstrap";
 
 import axios from "axios";
@@ -8,9 +9,16 @@ import { UserContext } from "../../UserContext";
 
 import "./Header.css";
 
-const Header = () => {
+import {activeClassHelper} from "../../Helpers/ActiveClassHelper";
+
+const Header = (props) => {
   const history = useHistory();
+  const location = props.location.pathname;
   const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    activeClassHelper(user, location);
+  }, [location]);
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
@@ -20,91 +28,84 @@ const Header = () => {
   };
 
   return (
-    <Row>
-      <Col>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-          <Navbar.Brand>
-            <Link className="nav-link nav-logo" to="/">
-              CTC
-            </Link>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link as={Link} to="/" className="nav-link active">
-                Home
-              </Nav.Link>
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
+      <Navbar.Brand>
+        <Link className="nav-link nav-logo" to="/">
+          C T C
+        </Link>
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link as={Link} to="/" className="nav-link" id="nav-home">
+            Home
+          </Nav.Link>
 
-              {user ? (
-                <>
-                  <Nav.Link as={Link} to="/create" className="nav-link active">
-                    Create
-                  </Nav.Link>
-                  <Nav.Link
-                    as={Link}
-                    to="/my-products"
-                    className="nav-link active"
-                  >
-                    My Products
-                  </Nav.Link>
-                  <Nav.Link
-                    as={Link}
-                    to="/favourites"
-                    className="nav-link active"
-                  >
-                    Favourites
-                  </Nav.Link>
-                </>
-              ) : (
-                ""
-              )}
-            </Nav>
-            <Nav>
-              {user ? (
-                <>
-                  <Nav.Link
-                    as={Button}
-                    id="logout-btn"
-                    onClick={logoutHandler}
-                    className="nav-link active"
-                  >
-                    Logout
-                  </Nav.Link>
-                  <Nav.Link
-                    as={Link}
-                    id="profile"
-                    to="/profile"
-                    className="nav-link active"
-                  >
-                    Profile
-                  </Nav.Link>
-                </>
-              ) : (
-                <>
-                  <Nav.Link
-                    as={Link}
-                    id="login-btn"
-                    to="/login"
-                    className="nav-link active"
-                  >
-                    Login
-                  </Nav.Link>
-                  <Nav.Link
-                    as={Link}
-                    id="register-btn"
-                    to="/register"
-                    className="nav-link active"
-                  >
-                    Register
-                  </Nav.Link>
-                </>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      </Col>
-    </Row>
+          {user ? (
+            <>
+              <Nav.Link
+                as={Link}
+                to="/create"
+                className="nav-link"
+                id="nav-create"
+              >
+                Create
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/my-products"
+                className="nav-link"
+                id="nav-myproducts"
+              >
+                My Products
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/favourites"
+                className="nav-link"
+                id="nav-favourites"
+              >
+                Favourites
+              </Nav.Link>
+            </>
+          ) : (
+            ""
+          )}
+        </Nav>
+        <Nav>
+          {user ? (
+            <Nav.Link
+              as={Button}
+              id="logout-btn"
+              onClick={logoutHandler}
+              className="nav-link "
+            >
+              Logout
+            </Nav.Link>
+          ) : (
+            <>
+              <Nav.Link
+                as={Link}
+                id="login-btn"
+                to="/login"
+                className="nav-link"
+              >
+                Login
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                id="register-btn"
+                to="/register"
+                className="nav-link"
+              >
+                Register
+              </Nav.Link>
+            </>
+          )}
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 
-export default Header;
+export default withRouter(Header);

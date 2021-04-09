@@ -8,6 +8,8 @@ import * as productService from "../../services/productService";
 import SingleProduct from "../SingleProduct/SingleProduct";
 import CategoryNavigation from "../CategoryNavigation/CategoryNavigation";
 
+import * as activeCategoryHelper from "../../Helpers/ActiveClassHelper";
+
 import "./ProductsPreview.css";
 
 const ProductsPreview = (props) => {
@@ -28,6 +30,7 @@ const ProductsPreview = (props) => {
 
   useEffect(() => {
     const category = props.match.params.category;
+    activeCategoryHelper.activeCategoryHelper(props.location.pathname)
 
     productService.getAll(category).then((res) => {
       let categorizedProductsArray = [];
