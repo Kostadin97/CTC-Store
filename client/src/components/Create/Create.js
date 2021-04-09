@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../../UserContext";
+import { useAlert } from "react-alert";
 
 import * as productService from "../../services/productService";
 import Error from "../../components/Error/Error";
@@ -8,6 +9,7 @@ import "./Create.css";
 const Create = (props) => {
   const { user, setUser } = useContext(UserContext);
   const [error, setError] = useState("");
+  const alert = useAlert();
 
   if (user === false) {
     props.history.push("/login");
@@ -32,13 +34,21 @@ const Create = (props) => {
         }
       })
       .catch((err) => {
-        setError(err.response.data.msg);
+        // setError(err.response.data.msg);
+        // alert.show(err.response.data.msg);
+        return (
+          <div>
+            {alert.show(err.response.data.msg, {
+              title: "Random Alert Title",
+              closeCopy: "Cancel",
+            })}
+          </div>
+        );
       });
   };
 
   return (
     <div className="container">
-      <br />
       <Error error={error} />
       <h1 className="form-title">Add product</h1>
       <form onSubmit={onCreateproductSubmitHandler}>

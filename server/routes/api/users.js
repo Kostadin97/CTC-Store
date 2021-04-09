@@ -6,74 +6,71 @@ const passport = require("passport");
 const key = require("../../config/keys").secret;
 const User = require("../../model/User");
 
-// router.post('regi')
-
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   let { name, username, email, password, confirmPassword } = req.body;
-  let hasError = Boolean;
 
-  if (
-    name === "" ||
-    username === "" ||
-    password === "" ||
-    confirmPassword === ""
-  ) {
-    hasError = true;
-    return res.status(404).json({
-      msg: "Please fill all the inputs.",
-      success: false,
-    });
-  }
-
-  if (password !== confirmPassword) {
-    hasError = true;
-    return res.status(400).json({
-      msg: "Password do not match.",
-      success: false,
-    });
-  }
-
-  User.findOne({ username: username }).then((user) => {
-    if (user) {
-      hasError = true;
-      return res.status(400).json({
-        msg: "Username is already taken.",
+  try {
+    if (
+      name === "" ||
+      username === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
+      return res.status(404).json({
+        msg: "Please fill all the inputs.",
         success: false,
       });
     }
-  });
 
-  User.findOne({ email: email }).then((user) => {
-    if (user) {
-      hasError = true;
+    if (password !== confirmPassword) {
       return res.status(400).json({
-        msg: "Email is already registered. Did you forgot your password?",
+        msg: "Password do not match.",
         success: false,
       });
     }
-  });
 
-  if (!hasError) {
+    await User.findOne({ username: username }).then((user) => {
+      if (user) {
+        return res.status(400).json({
+          msg: "Username is already taken.",
+          success: false,
+        });
+      }
+    });
+
+    await User.findOne({ email: email }).then((user) => {
+      if (user) {
+        return res.status(400).json({
+          msg: "Email is already registered. Did you forgot your password?",
+          success: false,
+        });
+      }
+    });
+
     let newUser = new User({
       name,
       username,
       password,
       email,
-      myProducts: [],
       savedProducts: [],
     });
-    bcrypt.genSalt(10, (err, salt) => {
+    await bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
         newUser.password = hash;
-        newUser.save().then(() => {
-          return res.status(201).json({
-            success: true,
-            msg: "User is now registered.",
-          });
-        });
+        newUser
+          .save()
+          .then(() => {
+            return res.status(201).json({
+              success: true,
+              msg: "User is now registered.",
+            });
+          })
+          .catch((err) => console.log(err));
       });
     });
+  } catch (error) {
+    console.log(error);
   }
 });
 

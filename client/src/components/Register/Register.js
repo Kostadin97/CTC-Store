@@ -7,7 +7,7 @@ import Error from "../../components/Error/Error";
 const Register = ({ history }) => {
   const [error, setError] = useState("");
 
-  const registerHandler = (e) => {
+  const registerHandler = async (e) => {
     e.preventDefault();
 
     let user = {
@@ -21,12 +21,11 @@ const Register = ({ history }) => {
     authService
       .register(user)
       .then((res) => {
-        if (res.status.success) {
-          history.push("/login");
-        }
+        console.log(res);
+        history.push("/login");
       })
-      .catch((err) => {
-        setError(err.response.data.msg);
+      .catch((error) => {
+        setError(error.response.data.msg);
       });
   };
 

@@ -13,6 +13,7 @@ import Profile from "./components/Profile/Profile";
 import Register from "./components/Register/Register";
 
 import { FileUpload } from "./components/FileUpload/FileUpload";
+import { Container } from "react-bootstrap";
 
 import "./App.css";
 import { useState, useMemo } from "react";
@@ -26,9 +27,8 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={value}>
-        <Switch>
-          <Header />
-        </Switch>
+        <Header />
+
         <Switch>
           <Route path="/" exact component={ProductsPreview} />
           <Route path="/categories/:category" component={ProductsPreview} />
@@ -41,10 +41,6 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
         </Switch>
-
-        <footer style={{ marginTop: "80px" }}>
-          Made by Kostadin Seymenski
-        </footer>
       </UserContext.Provider>
     </div>
   );

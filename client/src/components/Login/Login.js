@@ -38,8 +38,7 @@ const Login = (props) => {
   };
 
   return (
-    <div className="container">
-      <br />
+    <>
       <Error error={error} />
       <h1 className="form-title">Sign In</h1>
       <form onSubmit={onSubmit}>
@@ -65,7 +64,7 @@ const Login = (props) => {
         <input type="submit" className="btn btn-primary" value="Sign In" />
         <Link to="/register">Don't have an account? Sign up here!</Link>
       </form>
-    </div>
+    </>
   );
 };
 export default Login;
