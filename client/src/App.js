@@ -28,7 +28,7 @@ function App() {
       <UserContext.Provider value={value}>
         <Header />
         <Switch>
-          <Route path="/" exact component={ProductsPreview}></Route>
+          <Route path="/" exact component={ProductsPreview} />
           <Route path="/categories/:category" component={ProductsPreview} />
           <Route path="/details/:id" component={Details} />
           <Route path="/create" component={Create} />
@@ -36,7 +36,6 @@ function App() {
           <Route path="/favourites" component={Favourites} />
           <Route path="/edit/:id" component={Edit} />
           <Route path="/profile" component={Profile} />
-
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
         </Switch>

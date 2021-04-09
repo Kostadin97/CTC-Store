@@ -1,0 +1,11 @@
+.category-nav {
+  background-color: #343b3f;
+}
+
+.category-link {
+  color: white;
+}
+
+.category-link:hover {
+    color: red;
+  }

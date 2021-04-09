@@ -1,28 +1,36 @@
 import { Link } from "react-router-dom";
+import { Nav } from "react-bootstrap";
 
 import "./CategoryNavigation.css";
 
 const CategoryNavigation = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li className="nav-item">
-          <Link className="nav-link" to="/categories/all">
-            All
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/categories/Hat">
-            Hat
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/categories/Shoe">
-            Shoe
-          </Link>
-        </li>
-      </ul>
-    </nav>
+    <Nav className="justify-content-center category-nav">
+      <Nav.Item>
+        <Nav.Link className="category-link" as={Link} to="/categories/all">
+          All
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link className="category-link" as={Link} to="/categories/Clothes">
+          Clothes
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link className="category-link" as={Link} to="/categories/Shoes">
+          Shoes
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link
+          className="category-link"
+          as={Link}
+          to="/categories/Technologies"
+        >
+          Technologies
+        </Nav.Link>
+      </Nav.Item>
+    </Nav>
   );
 };
 

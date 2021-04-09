@@ -84,8 +84,9 @@ const Create = (props) => {
           <div className="form-group col-md-6">
             <select id="inputState" className="form-control" name="category">
               <option value="">Category...</option>
-              <option value="Shoe">Shoe</option>
-              <option value="Hat">Hat</option>
+              <option value="Clothes">Clothes</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Technologies">Technologies</option>
             </select>
           </div>
         </div>

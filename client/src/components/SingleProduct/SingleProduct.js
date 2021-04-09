@@ -1,6 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Col, Card, Button, ButtonGroup } from "react-bootstrap";
+
+import { UserContext } from "../../UserContext";
 
 import "./SingleProduct.css";
 

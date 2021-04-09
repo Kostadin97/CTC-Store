@@ -24,26 +24,34 @@ const Header = () => {
       <Col>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Navbar.Brand>
-            <Link className="nav-link" to="/">
+            <Link className="nav-link nav-logo" to="/">
               CTC
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link as={Link} to="/" className="nav-link">
+              <Nav.Link as={Link} to="/" className="nav-link active">
                 Home
               </Nav.Link>
 
               {user ? (
                 <>
-                  <Nav.Link as={Link} to="/create" className="nav-link">
+                  <Nav.Link as={Link} to="/create" className="nav-link active">
                     Create
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/my-products" className="nav-link">
+                  <Nav.Link
+                    as={Link}
+                    to="/my-products"
+                    className="nav-link active"
+                  >
                     My Products
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/favourites" className="nav-link">
+                  <Nav.Link
+                    as={Link}
+                    to="/favourites"
+                    className="nav-link active"
+                  >
                     Favourites
                   </Nav.Link>
                 </>
@@ -58,7 +66,7 @@ const Header = () => {
                     as={Button}
                     id="logout-btn"
                     onClick={logoutHandler}
-                    className="nav-link"
+                    className="nav-link active"
                   >
                     Logout
                   </Nav.Link>
@@ -77,7 +85,7 @@ const Header = () => {
                     as={Link}
                     id="login-btn"
                     to="/login"
-                    className="nav-link"
+                    className="nav-link active"
                   >
                     Login
                   </Nav.Link>
@@ -85,7 +93,7 @@ const Header = () => {
                     as={Link}
                     id="register-btn"
                     to="/register"
-                    className="nav-link"
+                    className="nav-link active"
                   >
                     Register
                   </Nav.Link>

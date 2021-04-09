@@ -21,7 +21,6 @@ li {
 
 #login-btn {
   position: relative;
-
 }
 
 #register-btn {
@@ -30,5 +29,15 @@ li {
 
 #profile {
   position: relative;
+}
 
+.nav-logo {
+  color: red;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.nav-logo:hover {
+  color: white;
+  
 }

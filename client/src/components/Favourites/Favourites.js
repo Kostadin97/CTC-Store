@@ -25,12 +25,15 @@ const Favourites = (props) => {
       }
     });
   }, []);
+
+  console.log(products);
+
   return (
     <Container>
       <Row style={{ marginTop: "80px" }}>
         <Col>
           <Container>
-            <h1>Favourites</h1>
+            <h1>My Products</h1>
             <CardGroup>
               <Row>
                 {products

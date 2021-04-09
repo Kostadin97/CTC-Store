@@ -37,7 +37,6 @@ const ProductsPreview = (props) => {
         }
         if (category === "all") {
           categorizedProductsArray.push(result);
-          console.log(props.match);
         }
         if (props.match.url === "/") {
           categorizedProductsArray.push(result);

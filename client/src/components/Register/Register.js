@@ -20,8 +20,10 @@ const Register = ({ history }) => {
 
     authService
       .register(user)
-      .then(() => {
-        history.push("/login");
+      .then((res) => {
+        if (res.status.success) {
+          history.push("/login");
+        }
       })
       .catch((err) => {
         setError(err.response.data.msg);

@@ -104,20 +104,32 @@ const Details = (props) => {
             Delete
           </button>
         </div>
-        {!hasSaved ? (
-          <div className="col-md-2">
+      </div>
+      <div className="row single-content">
+        <div className="col-md-12" style={{ textAlign: "left" }}>
+          {!hasSaved ? (
             <button
-              className="danger-btn btn btn-danger"
+              className="danger-btn btn btn-primary"
               onClick={saveProductHandler}
             >
-              Save
+              Add to favourites
             </button>
-          </div>
-        ) : (
-          <>
-            <p>You have saved that product.</p>
-          </>
-        )}
+          ) : (
+            <p style={{ color: "black", fontSize: "20px" }}>
+              Product is added to{" "}
+              <Link
+                style={{
+                  fontStyle: "italic",
+                  fontWeight: "bold",
+                  color: "red",
+                }}
+                to="/favourites"
+              >
+                Favourites
+              </Link>
+            </p>
+          )}
+        </div>
       </div>
       <div className="row single-content">
         <div className="col-md-12">
