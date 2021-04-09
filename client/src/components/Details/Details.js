@@ -1,21 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+
+import { UserContext } from "../../UserContext";
 
 import * as productService from "../../services/productService";
 
 import "./Details.css";
 
 const Details = (props) => {
+  const { user, setUser } = useContext(UserContext);
+
   const [product, setProduct] = useState([]);
   const [hasSaved, setHasSaved] = useState(null);
   const productId = props.match.params.id;
 
+  if (!user) {
+    props.history.push("/login");
+  }
+
   useEffect(() => {
     productService.getFavourites().then((products) => {
-      if (products.includes(productId)) {
-        setHasSaved(true);
-      } else {
-        setHasSaved(false);
+      if (products) {
+        if (products.includes(productId)) {
+          setHasSaved(true);
+        } else {
+          setHasSaved(false);
+        }
       }
     });
   }, []);

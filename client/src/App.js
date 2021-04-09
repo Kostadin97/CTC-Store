@@ -35,13 +35,14 @@ function App() {
           <Route path="/my-products" component={MyProducts} />
           <Route path="/favourites" component={Favourites} />
           <Route path="/edit/:id" component={Edit} />
-          <Route path="/login" component={Login} />
           <Route path="/profile" component={Profile} />
-          <Route path="/register" component={Register} />
 
-          <Route path="/fileupload" component={FileUpload} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
         </Switch>
-        <footer style={{ marginTop: "80px" }}>Made by Kostadin Seymenski</footer>
+        <footer style={{ marginTop: "80px" }}>
+          Made by Kostadin Seymenski
+        </footer>
       </UserContext.Provider>
     </div>
   );

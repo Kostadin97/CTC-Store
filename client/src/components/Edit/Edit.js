@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { UserContext } from "../../UserContext";
 
 import * as productService from "../../services/productService";
 
@@ -7,9 +8,15 @@ import Error from "../Error/Error";
 import "./Edit.css";
 
 const Edit = (props) => {
+  const { user, setUser } = useContext(UserContext);
   const [product, setProduct] = useState({});
-  const productId = props.match.params.id;
   const [error, setError] = useState("");
+
+  const productId = props.match.params.id;
+
+  if (!user) {
+    props.history.push("/login");
+  }
 
   useEffect(() => {
     productService.getOne(productId).then((result) => setProduct(result));
