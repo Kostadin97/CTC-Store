@@ -3,13 +3,22 @@ import { Link } from "react-router-dom";
 
 import * as productService from "../../services/productService";
 
-import axios from "axios";
-
 import "./Details.css";
 
 const Details = (props) => {
   const [product, setProduct] = useState([]);
+  const [hasSaved, setHasSaved] = useState(null);
   const productId = props.match.params.id;
+
+  useEffect(() => {
+    productService.getFavourites().then((products) => {
+      if (products.includes(productId)) {
+        setHasSaved(true);
+      } else {
+        setHasSaved(false);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     productService.getOne(productId).then((product) => setProduct(product));
@@ -28,19 +37,16 @@ const Details = (props) => {
 
   const saveProductHandler = () => {
     const productId = props.match.params.id;
-    const user = localStorage.getItem("token");
-    const options = {
-      url: `http://localhost:5000/api/products/save/${productId}`,
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: user,
-      },
-    };
 
-    axios(options).then(() => {
-      props.history.push(`/details/${productId}`);
-    });
+    productService
+      .saveProduct(productId)
+      .then(() => {
+        props.history.push(`/details/${productId}`);
+        setHasSaved(true);
+      })
+      .catch((err) => {
+        console.log(err.response.data.msg);
+      });
   };
 
   return (
@@ -88,14 +94,20 @@ const Details = (props) => {
             Delete
           </button>
         </div>
-        <div className="col-md-2">
-          <button
-            className="danger-btn btn btn-danger"
-            onClick={saveProductHandler}
-          >
-            Save
-          </button>
-        </div>
+        {!hasSaved ? (
+          <div className="col-md-2">
+            <button
+              className="danger-btn btn btn-danger"
+              onClick={saveProductHandler}
+            >
+              Save
+            </button>
+          </div>
+        ) : (
+          <>
+            <p>You have saved that product.</p>
+          </>
+        )}
       </div>
       <div className="row single-content">
         <div className="col-md-12">

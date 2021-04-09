@@ -50,8 +50,14 @@ router.put("/save/:id", (req, res) => {
   const productId = req.params.id;
   User.findById(userId)
     .then((user) => {
-      user.savedProducts.push(productId);
-      user.save();
+      if (!user.savedProducts.includes(productId)) {
+        user.savedProducts.push(productId);
+        user.save();
+      } else {
+        return res
+        .status(400)
+        .json({ success: false, msg: "You have already saved that product." });  
+      }
     })
     .then(() => {
       return res
@@ -63,6 +69,10 @@ router.put("/save/:id", (req, res) => {
         msg: `Product with id: ${productId} was NOT saved successfully.`,
       });
     });
+});
+
+router.post("/upload", (req, res) => {
+  const { imageFile } = req.body;
 });
 
 router.post("/create", (req, res) => {

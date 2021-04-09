@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 
 import * as productService from "../../services/productService";
+
+import Error from "../Error/Error";
+
 import "./Edit.css";
 
 const Edit = (props) => {
   const [product, setProduct] = useState({});
   const productId = props.match.params.id;
+  const [error, setError] = useState("");
 
   useEffect(() => {
     productService.getOne(productId).then((result) => setProduct(result));
@@ -22,9 +26,16 @@ const Edit = (props) => {
       category: e.target.category.value,
     };
 
-    productService.edit(productId, edittedProduct).then(() => {
-      props.history.push(`/details/${productId}`);
-    });
+    productService
+      .edit(productId, edittedProduct)
+      .then((res) => {
+        if (res.data.success) {
+          props.history.push(`/details/${productId}`);
+        }
+      })
+      .catch((err) => {
+        setError(err.response.data.msg);
+      });
   };
 
   const handleChange = ({ target }) => {
@@ -34,6 +45,8 @@ const Edit = (props) => {
 
   return (
     <div className="container">
+      <br />
+      <Error error={error} />
       <h1 className="form-title">Edit product</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
@@ -90,7 +103,7 @@ const Edit = (props) => {
               value={product.category || ""}
               onChange={handleChange}
             >
-              <option>Category...</option>
+              <option value="">Category...</option>
               <option value="shoes">Shoes</option>
               <option value="hats">Hats</option>
               <option value="jackets">Jackets</option>

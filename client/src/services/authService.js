@@ -7,3 +7,4 @@ export const login = (user) => {
 export const register = (user) => {
   return axios.post("http://localhost:5000/api/users/register", user);
 };
+

@@ -42,14 +42,17 @@ export const getFavourites = () => {
     .catch((error) => console.log(error));
 };
 
-export const saveProduct = (id) => {
+export const saveProduct = (productId) => {
   const token = localStorage.getItem("token");
-  return axios.put(`${url}/save/${id}`, {
+  const options = {
+    url: `http://localhost:5000/api/products/save/${productId}`,
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: token,
     },
-  });
+  };
+  return axios(options);
 };
 
 export const create = (newProduct) => {
@@ -67,6 +70,7 @@ export const create = (newProduct) => {
 };
 
 export const edit = (id, data) => {
+  const token = localStorage.getItem("token");
   const edittedProduct = {
     title: data.title,
     description: data.description,
@@ -74,14 +78,17 @@ export const edit = (id, data) => {
     price: data.price,
     category: data.category,
   };
-
-  return fetch(`${url}/edit/${id}`, {
+  const options = {
+    url: `${url}/edit/${id}`,
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: token,
     },
-    body: JSON.stringify(edittedProduct),
-  });
+    data: edittedProduct,
+  };
+
+  return axios(options);
 };
 
 export const deleteProduct = (id) => {

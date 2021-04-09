@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Container, Col, Row } from "react-bootstrap";
+import React, { useEffect, useState, useContext } from "react";
+import { Container, Col, Row, CardGroup } from "react-bootstrap";
+
+import { UserContext } from "../../UserContext";
 
 import * as productService from "../../services/productService";
-import Header from "../../components/Header/Header";
-import SingleProduct from "../SingleProduct/SingleProduct";
 
+import SingleProduct from "../SingleProduct/SingleProduct";
 import CategoryNavigation from "../CategoryNavigation/CategoryNavigation";
 
 import "./ProductsPreview.css";
 
 const ProductsPreview = (props) => {
-  const user = localStorage.getItem("token");
-  const isLoggedIn = user ? true : false;
+  const { user, setUser } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
   const [categorizedProducts, setCategorizedProducts] = useState([]);
@@ -48,45 +48,60 @@ const ProductsPreview = (props) => {
   }, [props.match.url]);
 
   return (
-    <>
-      <div className="row latest-products-div">
-        <div className="col-md-12">
-          {isLoggedIn ? (
-            <>
-              <div className="container">
-                <h1>{}</h1>
+    <Container style={{ marginTop: "30px" }}>
+      {user ? (
+        <>
+          <Row>
+            <Col>
+              <Container>
+                <h1 style={{ marginBottom: "30px" }}>Products by Category</h1>
                 <CategoryNavigation />
-                <div className="row">
+                <Row style={{ marginTop: "30px" }}>
                   {categorizedProducts
                     ? categorizedProducts.map((card) => (
                         <SingleProduct key={card._id} {...card} />
                       ))
                     : ""}
-                </div>
-              </div>
-              <br />
-              <br />
+                </Row>
+              </Container>
+            </Col>
+          </Row>
+          <Row style={{ marginTop: "80px" }}>
+            <Col>
+              <Container>
+                <h1>Latest Products</h1>
+                <CardGroup>
+                  <Row>
+                    {products
+                      ? products.map((card) => (
+                          <SingleProduct key={card._id} {...card} />
+                        ))
+                      : ""}
+                  </Row>
+                </CardGroup>
+              </Container>
+            </Col>
+          </Row>
+        </>
+      ) : (
+        <Row style={{ marginTop: "80px" }}>
+          <Col>
+            <Container>
               <h1>Latest Products</h1>
-              <div className="container">
-                <div className="row">
+              <CardGroup>
+                <Row>
                   {products
                     ? products.map((card) => (
                         <SingleProduct key={card._id} {...card} />
                       ))
                     : ""}
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div>Nothing here</div>
-            </>
-          )}
-        </div>
-      </div>
-      <br />
-      <br />
-    </>
+                </Row>
+              </CardGroup>
+            </Container>
+          </Col>
+        </Row>
+      )}
+    </Container>
   );
 };
 export default ProductsPreview;

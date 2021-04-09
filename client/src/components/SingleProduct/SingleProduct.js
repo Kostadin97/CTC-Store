@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Col, Card, Button, ButtonGroup } from "react-bootstrap";
 
 import "./SingleProduct.css";
 
@@ -12,29 +13,21 @@ const SingleProduct = ({
   category,
 }) => {
   return (
-    <div className="col-md-4 card-div" key={_id}>
-      <div className="card">
-        <div className="card-body">
-          <h5 className="card-title">{title}</h5>
-        </div>
-        <img
-          id="products-preview-img"
-          src={imageUrl}
-          className="card-img-top"
-          alt="..."
-        />
-
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item">Price: {price}$</li>
-          <li className="list-group-item">Category: {category}</li>
-        </ul>
-        <div className="card-body">
+    <Col lg="4">
+      <Card style={{ marginTop: "30px" }}>
+        <Card.Img variant="top" src={imageUrl} />
+        <Card.Body>
+          <Card.Title>{title}</Card.Title>
+          <Card.Text>{description.slice(30)}</Card.Text>
           <Link to={`/details/` + _id} className="card-link">
             View
           </Link>
-        </div>
-      </div>
-    </div>
+        </Card.Body>
+        <Card.Footer>
+          <small className="text-muted">Category: {category}</small>
+        </Card.Footer>
+      </Card>
+    </Col>
   );
 };
 export default SingleProduct;

@@ -1,44 +1,41 @@
 import { useEffect, useState } from "react";
+import { Container, Row, Col, CardGroup } from "react-bootstrap";
 
 import SingleProduct from "../SingleProduct/SingleProduct";
 
 import * as productService from "../../services/productService";
 
-const Favourites = (props) => {
+const Favourites = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    let resultArray = [];
     productService.getFavourites().then((res) => {
       res.forEach((productId) => {
-        productService
-          .getOne(productId)
-          .then((result) => {
-            resultArray.push(result);
-          })
-          .then(() => {
-            setProducts(resultArray);
-          })
-          .catch((err) => console.log(err));
+        productService.getOne(productId).then((result) => {
+          setProducts((oldArray) => [...oldArray, result]);
+        });
       });
     });
   }, []);
-
   return (
-    <div className="row latest-products-div">
-      <div className="col-md-12">
-        <h1>Favourites</h1>
-        <div className="container">
-          <div className="row">
-            {products
-              ? products.map((card) => (
-                  <SingleProduct key={card._id} {...card} />
-                ))
-              : ""}
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container>
+      <Row style={{ marginTop: "80px" }}>
+        <Col>
+          <Container>
+            <h1>Favourites</h1>
+            <CardGroup>
+              <Row>
+                {products
+                  ? products.map((card) => (
+                      <SingleProduct key={card._id} {...card} />
+                    ))
+                  : ""}
+              </Row>
+            </CardGroup>
+          </Container>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

@@ -1,4 +1,5 @@
 import { Route, Switch } from "react-router-dom";
+import { Card, Button } from "react-bootstrap";
 
 import Header from "./components/Header/Header";
 import ProductsPreview from "./components/ProductsPreview/ProductsPreview";
@@ -11,8 +12,10 @@ import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Register from "./components/Register/Register";
 
+import { FileUpload } from "./components/FileUpload/FileUpload";
+
 import "./App.css";
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { UserContext } from "./UserContext";
 
 function App() {
@@ -35,7 +38,10 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/profile" component={Profile} />
           <Route path="/register" component={Register} />
+
+          <Route path="/fileupload" component={FileUpload} />
         </Switch>
+        <footer style={{ marginTop: "80px" }}>Made by Kostadin Seymenski</footer>
       </UserContext.Provider>
     </div>
   );
