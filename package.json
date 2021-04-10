@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client-install": "npm install --prefix client",
-    "server": "node app.js",
-    "dev": "nodemon app.js",
-    "client": "npm run serve --prefix client",
+    "server": "node index.js",
+    "dev": "nodemon index.js",
+    "client": "cd client && npm start",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
