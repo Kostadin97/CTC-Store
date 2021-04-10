@@ -54,9 +54,10 @@ router.put("/save/:id", (req, res) => {
         user.savedProducts.push(productId);
         user.save();
       } else {
-        return res
-        .status(400)
-        .json({ success: false, msg: "You have already saved that product." });  
+        return res.status(400).json({
+          success: false,
+          msg: "You have already saved that product.",
+        });
       }
     })
     .then(() => {
@@ -146,9 +147,23 @@ router.put("/edit/:id", (req, res) => {
 });
 
 router.delete("/delete/:id", (req, res) => {
+  // const token = req.headers.authorization.split(" ")[1];
+  // const userId = jwt.verify(token, "yoursecret")._id;
+  const userId = "606b058b21ceb810e57bffd4";
+
   const id = req.params.id;
 
   Product.findByIdAndRemove(id)
+    .then(() => {
+      User.findById(userId).then((user) => {
+        let productsArray = user.savedProducts;
+        let currentProductIndex = productsArray.indexOf(
+          "60717e383edf7f0852db8da6"
+        );
+        productsArray.splice(currentProductIndex, 1);
+        user.save();
+      });
+    })
     .then(() => {
       return res.status(200).json({ msg: "Product was deleted successfully." });
     })

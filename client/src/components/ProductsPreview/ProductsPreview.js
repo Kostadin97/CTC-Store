@@ -70,7 +70,7 @@ const ProductsPreview = (props) => {
               </Container>
             </Col>
           </Row>
-          <Row style={{ marginTop: "80px" }}>
+          <Row style={{ marginTop: "80px", marginBottom: '50px' }}>
             <Col>
               <Container>
                 <h1>Latest Products</h1>

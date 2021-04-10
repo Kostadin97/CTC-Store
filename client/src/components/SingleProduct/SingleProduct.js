@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Col, Card, Button, ButtonGroup } from "react-bootstrap";
-
-import { UserContext } from "../../UserContext";
+import { Col, Card } from "react-bootstrap";
 
 import "./SingleProduct.css";
 
@@ -17,11 +15,15 @@ const SingleProduct = ({
   return (
     <Col lg="4">
       <Card style={{ marginTop: "30px" }}>
-        <Card.Img variant="top" src={imageUrl} />
+        <Card.Img variant="top" src={imageUrl} style={{ height: "250px" }} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
-          <Card.Text>{description.slice(30)}</Card.Text>
-          <Link to={`/details/` + _id} className="card-link">
+          {/* <Card.Text>{description.slice(30)}</Card.Text> */}
+          <Link
+            to={`/details/` + _id}
+            className="card-link"
+            style={{ color: "red", fontSize: "20px" }}
+          >
             View
           </Link>
         </Card.Body>

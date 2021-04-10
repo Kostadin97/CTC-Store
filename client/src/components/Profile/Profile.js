@@ -1,6 +1,4 @@
-import { useState } from "react";
-
-const Profile = (props) => {
+const Profile = () => {
   return (
     <div>
       <h1>Hello user</h1>

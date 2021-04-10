@@ -13,6 +13,7 @@ router.post("/register", async (req, res) => {
     if (
       name === "" ||
       username === "" ||
+      email === "" ||
       password === "" ||
       confirmPassword === ""
     ) {
