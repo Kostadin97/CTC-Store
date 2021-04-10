@@ -30,5 +30,5 @@ When logging in, the application checks if the provided credentials match a user
 If an error occurs, the user recieves a notification which contains the error message.
 
 # Technologies
-The CTC-Store Application runs on a NodeJs server written in ExpressJs. It uses APIs to connect to the database. The frontend part runs on React.
+The CTC-Store Application runs on a NodeJs server written in ExpressJs. It uses APIs to connect to the MongoDB database. The frontend part runs on React.
 
