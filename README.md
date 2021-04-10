@@ -4,7 +4,7 @@ A ReactJs Application using Express and REST APIs
 # Heroku Application Link
 https://heroku-ctc.herokuapp.com/
 
-#Setup and Launch
+# Setup and Launch
 ```
 cd client
 npm install
@@ -14,12 +14,10 @@ npm start
 
 ```
 
-
 # Application Desceription
 CTC is a online store application. A user can browse all products and filter them by category. 
 The application has CRUD funcitonality which means that a logged in user can also create, delete and update products. 
 If the user likes a certain product, it can be added to Favourites and on the "Favourites" page all saved products can be previewed.
-
 
 # Authentication and Authorization
 The application has a homepage for guest users and one for logged-in users. A user cannot see any products until he is logged in. On the guest users page, there are only the latest products. The homepage for the logged-in users contains all products and a category switcher. 
@@ -34,4 +32,3 @@ If an error occurs, the user recieves a notification which contains the error me
 
 # Technologies
 The CTC-Store Application runs on a NodeJs server written in ExpressJs. It uses APIs to connect to the MongoDB database. The frontend part runs on React.
-
