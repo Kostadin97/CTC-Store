@@ -147,9 +147,9 @@ router.put("/edit/:id", (req, res) => {
 });
 
 router.delete("/delete/:id", (req, res) => {
-  // const token = req.headers.authorization.split(" ")[1];
-  // const userId = jwt.verify(token, "yoursecret")._id;
-  const userId = "606b058b21ceb810e57bffd4";
+  const token = req.headers.authorization.split(" ")[1];
+  const userId = jwt.verify(token, "yoursecret")._id;
+  // const userId = "606b058b21ceb810e57bffd4";
 
   const id = req.params.id;
 
@@ -157,9 +157,7 @@ router.delete("/delete/:id", (req, res) => {
     .then(() => {
       User.findById(userId).then((user) => {
         let productsArray = user.savedProducts;
-        let currentProductIndex = productsArray.indexOf(
-          "60717e383edf7f0852db8da6"
-        );
+        let currentProductIndex = productsArray.indexOf(userId);
         productsArray.splice(currentProductIndex, 1);
         user.save();
       });

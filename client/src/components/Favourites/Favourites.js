@@ -38,7 +38,7 @@ const Favourites = (props) => {
                   ? products.map((card) => (
                       <SingleProduct key={card._id} {...card} />
                     ))
-                  : ""}
+                  : "No products "}
               </Row>
             </CardGroup>
           </Container>

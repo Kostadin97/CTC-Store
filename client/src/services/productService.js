@@ -91,7 +91,11 @@ export const edit = (id, data) => {
 };
 
 export const deleteProduct = (id) => {
+  const token = localStorage.getItem("token");
   return fetch(`${url}/delete/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: token,
+    },
   });
 };

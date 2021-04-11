@@ -15,7 +15,7 @@ const SingleProduct = ({
   return (
     <Col lg="4">
       <Card style={{ marginTop: "30px" }}>
-        <Card.Img variant="top" src={imageUrl} style={{ height: "250px" }} />
+        <Card.Img variant="top" src={imageUrl} style={{ maxHeight: "500px" }} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           {/* <Card.Text>{description.slice(30)}</Card.Text> */}
