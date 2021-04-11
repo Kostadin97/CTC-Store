@@ -153,11 +153,17 @@ router.delete("/delete/:id", (req, res) => {
 
   const id = req.params.id;
 
+  // User.findById(userId).then((user) => {
+  //   let productsArray = user.savedProducts;
+  //   let currentProductIndex = productsArray.indexOf(id);
+  // })
+
+
   Product.findByIdAndRemove(id)
     .then(() => {
       User.findById(userId).then((user) => {
         let productsArray = user.savedProducts;
-        let currentProductIndex = productsArray.indexOf(userId);
+        let currentProductIndex = productsArray.indexOf(id);
         productsArray.splice(currentProductIndex, 1);
         user.save();
       });

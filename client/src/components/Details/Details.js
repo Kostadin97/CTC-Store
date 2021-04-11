@@ -34,15 +34,14 @@ const Details = (props) => {
     productService.getOne(productId).then((product) => setProduct(product));
   }, []);
 
-  const deleteProductHandler = () => {
-    productService
-      .deleteProduct(productId)
-      .then(() => {
+  const deleteProductHandler = async () => {
+    try {
+      await productService.deleteProduct(productId).then(() => {
         props.history.push("/");
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const saveProductHandler = () => {

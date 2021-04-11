@@ -14,7 +14,7 @@ const SingleProduct = ({
 }) => {
   return (
     <Col lg="4">
-      <Card style={{ marginTop: "30px" }}>
+      <Card style={{ marginTop: "30px" }} key={_id}>
         <Card.Img variant="top" src={imageUrl} style={{ maxHeight: "500px" }} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
