@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import jwt from "jsonwebtoken";
 
 import { UserContext } from "../../UserContext";
 
@@ -8,11 +9,14 @@ import * as productService from "../../services/productService";
 import "./Details.css";
 
 const Details = (props) => {
-  const { user, setUser } = useContext(UserContext);
+  const token = localStorage.getItem("token").split(" ")[1];
+  const userId = jwt.verify(token, "yoursecret")._id;
 
+  const { user, setUser } = useContext(UserContext);
   const [product, setProduct] = useState([]);
   const [hasSaved, setHasSaved] = useState(null);
   const productId = props.match.params.id;
+  const [isAuthor, setIsAuthor] = useState(null);
 
   if (!user) {
     props.history.push("/login");
@@ -31,7 +35,16 @@ const Details = (props) => {
   }, []);
 
   useEffect(() => {
-    productService.getOne(productId).then((product) => setProduct(product));
+    productService.getOne(productId).then((product) => {
+      console.log(product);
+      console.log(userId);
+      if (product.creator === userId) {
+        setIsAuthor(true);
+      } else {
+        setIsAuthor(false);
+      }
+      setProduct(product);
+    });
   }, []);
 
   const deleteProductHandler = async () => {
@@ -88,22 +101,27 @@ const Details = (props) => {
           />
         </div>
       </div>
-      <div className="row buttons-div">
-        <div className="col-md-2">
-          <Link className="btn btn-dark" to={`/edit/` + product._id}>
-            Edit
-          </Link>
-        </div>
+      {isAuthor ? (
+        <div className="row buttons-div">
+          <div className="col-md-2">
+            <Link className="btn btn-dark" to={`/edit/` + product._id}>
+              Edit
+            </Link>
+          </div>
 
-        <div className="col-md-2">
-          <button
-            className="danger-btn btn btn-danger"
-            onClick={deleteProductHandler}
-          >
-            Delete
-          </button>
+          <div className="col-md-2">
+            <button
+              className="danger-btn btn btn-danger"
+              onClick={deleteProductHandler}
+            >
+              Delete
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
+
       <div className="row single-content">
         <div className="col-md-12" style={{ textAlign: "left" }}>
           {!hasSaved ? (
